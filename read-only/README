@@ -1,0 +1,32 @@
+APACHE CONFIGURATION EXAMPLE:
+First of all, set up SSL to cover your authentication.  USING HTTP FOR HTTP
+AUTHENTICATION IS NOT SECURE - PASSWORDS ARE SENT IN THE CLEAR.
+        <Directory /var/www/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+
+                AuthUserFile /some/path/outside/served/directories/users
+                AuthName "Area protected by belligerent drunk."
+                AuthGroupFile /dev/null
+                AuthType Basic
+                Require valid-user
+        </Directory>
+
+        <LocationMatch "/ANUBIS/(read-only|images|css|table-images)">
+                Satisfy Any
+                Allow from all
+        </LocationMatch>
+
+This makes it so your entire website (except for the matched locations) is password protected.  It's nice to have that as a blanket policy.
+
+MYSQL CONFIGURATION:
+In addition to the normal SQL stuff you have to do with ANUBIS, you have to do
+the following (change the database name / user / password as needed):
+
+mysql> CREATE USER 'anubis-read-only'@'localhost' IDENTIFIED BY 'foobar';
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> GRANT SELECT ON anubis.* TO 'anubis-read-only'@'localhost';
+Query OK, 0 rows affected (0.06 sec)
