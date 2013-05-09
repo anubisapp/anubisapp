@@ -20,8 +20,8 @@
     	<tr>
 	<th>Donations</th></tr><tr>
 	  <td>
-<p>Anubis has taken many hours and hard work to get to the stage it's in. If
-you like Anubis, any donation will be appreciated:
+<p>AnubisApp has taken many hours and hard work to get to the stage it's in. If
+you like AnubisApp, any donation will be appreciated:
 <span style="color: white">1Fxpijq1NN52LzSzD2WtGbT3ZTWq366ejj</span></p>
 
 <p>If you like this theming (dark/black), it was done with a forked copy of the

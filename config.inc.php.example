@@ -43,7 +43,7 @@ function anubis_db_connect()
     }
     catch(PDOException $e)
     {
-      die ('FATAL: Cannot use Anubis_db !  ' . $e->getMessage());
+      die ('FATAL: Cannot use AnubisApp_db !  ' . $e->getMessage());
     }
 
     $primary_key = "int(3) NOT NULL AUTO_INCREMENT PRIMARY KEY";
@@ -60,7 +60,7 @@ function anubis_db_connect()
     }
     catch(PDOException $e)
     {
-        die ('FATAL: Cannot use Anubis_db !  ' . $e->getMessage());
+        die ('FATAL: Cannot use AnubisApp_db !  ' . $e->getMessage());
     }
 
     $primary_key = "INTEGER PRIMARY KEY";
