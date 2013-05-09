@@ -37,13 +37,10 @@ if (isset($_POST['savehostid']))
 
 ?>
 <?php require('head.inc.php'); ?>
+<div>
+    <h2>Add host</h2>
+</div>
 
-    <div id="templatemo_main">
-    	<div class="col_fw">
-        	<div class="templatemo_megacontent">
-            	<h2>Add host</h2>
-
-                <div class="cleaner h20"></div>
 <?php
 if (isset($id)) 
 {
@@ -101,26 +98,11 @@ if (isset($id))
 <BR>
 You can change any value afterwards.<BR>
 </p>
+</div>
+</div>
 
-                <div class="cleaner h20"></div>
-<!--                 <a href="#" class="more float_r"></a> -->
-            </div>
+<?php include("footer.inc.php"); ?>
 
-            <div class="cleaner"></div>
-		</div>
-
-        <div class="cleaner"></div>
-        </div>
-    </div>
-    
-    <div class="cleaner"></div>
-
-<div id="templatemo_footer_wrapper">
-    <div id="templatemo_footer">
-        <?php include("footer.inc.php"); ?>
-        <div class="cleaner"></div>
-    </div>
-</div> 
   
 </body>
 </html>

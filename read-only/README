@@ -14,7 +14,7 @@ AUTHENTICATION IS NOT SECURE - PASSWORDS ARE SENT IN THE CLEAR.
                 Require valid-user
         </Directory>
 
-        <LocationMatch "/ANUBIS/(read-only|images|css|table-images)">
+        <LocationMatch "/AnubisApp/(read-only|images|css|table-images)">
                 Satisfy Any
                 Allow from all
         </LocationMatch>
@@ -22,7 +22,7 @@ AUTHENTICATION IS NOT SECURE - PASSWORDS ARE SENT IN THE CLEAR.
 This makes it so your entire website (except for the matched locations) is password protected.  It's nice to have that as a blanket policy.
 
 MYSQL CONFIGURATION:
-In addition to the normal SQL stuff you have to do with ANUBIS, you have to do
+In addition to the normal SQL stuff you have to do with AnubisApp, you have to do
 the following (change the database name / user / password as needed):
 
 mysql> CREATE USER 'anubis-read-only'@'localhost' IDENTIFIED BY 'foobar';

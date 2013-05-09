@@ -7,7 +7,7 @@ $page = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
 ?>
 <div id="templatemo_header">
 
-    <div id="site_title"><h1><a href="index.php">Anubis</a></h1></div>
+    <div id="site_title"><h1><a href="index.php">AnubisApp</a></h1></div>
 
     <div id="templatemo_menu" class="ddsmoothmenu">
       <ul>

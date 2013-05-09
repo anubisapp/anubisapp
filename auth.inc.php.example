@@ -6,7 +6,7 @@ $pass="admin";
 if (!isset($_SERVER['PHP_AUTH_USER'])) {
 	header('WWW-Authenticate: Basic realm="Anubis: hank"');
 	header('HTTP/1.0 401 Unauthorized');
-	echo 'Sorry - no Anubis for you.';
+	echo 'Sorry - no AnubisApp for you.';
 	exit;
 } else
 {
