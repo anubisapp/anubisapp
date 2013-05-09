@@ -1,99 +1,133 @@
 <?php
-
+/* ==========================================================
+ * AnubisApp v1.0.0
+ * http://anubisapp.com
+ * ==========================================================
+ *
+ * @author     Matthew Evans - https://github.com/add1ct3dd
+ * @author     Tristan van Bokkem - https://github.com/tristanvanbokkem
+ * @copyright  2013 AnubisApp Team
+ * ========================================================== */
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>AnubisApp</title>
+
+    <title>AnubisApp - A cgminer monitoring and configuration tool.</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    
-<link rel="icon" href="favicon.ico" />
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-<style type="text/css">
-          /* Sticky footer styles
-      -------------------------------------------------- */
 
-      html,
-      body {
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <style type="text/css">
+    html,
+    body {
         height: 100%;
-        /* The html and body elements cannot have any padding or margin. */
-      }
+    }
 
-      /* Wrapper for page content to push down footer */
-      #wrap {
+    #wrap {
         min-height: 100%;
         height: auto !important;
         height: 100%;
-        /* Negative indent footer by it's height */
         margin: 0 auto -60px;
-      }
+    }
 
-      /* Set the fixed height of the footer here */
-      #push,
-      #footer {
+    #push, #footer {
         height: 60px;
-      }
-      #footer {
+    }
+    #footer {
         background-color: #f5f5f5;
-      }
+    }
 
-      /* Lastly, apply responsive CSS fixes as necessary */
-      @media (max-width: 767px) {
+    @media (max-width: 767px) {
         #footer {
-          margin-left: -20px;
-          margin-right: -20px;
-          padding-left: 20px;
-          padding-right: 20px;
+            margin-left: -20px;
+            margin-right: -20px;
+            padding-left: 20px;
+            padding-right: 20px;
         }
-      }
-    
-      .container .credit {
+    }
+    #wrap > .container {
+        padding-top: 60px;
+    }
+    .container .credit {
         margin: 20px 0;
-      }
-</style>
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
+    }
+
+    code {
+        font-size: 80%;
+    }
+
+    .left {
+        float: left !important;
+    }
+    .right{
+        float: right !important;
+    }
+    </style>
+
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <!--[if IE]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 </head>
 <body>
-<div class="wrap">
-    <div class="container">
-        <div class="masthead">
-            <h3 class="muted">AnubisApp</h3>
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <ul class="nav">        
+    <div id="wrap">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="brand" href="#">AnubisApp</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
                             <?php
-                            $pages = array("Home" => "index.php",
-                                         "Read-Only" => "read-only/index.php",
-                                         "Accounts" => "accounts.php",
-                                         "Configuration" => "config.php",
-                                         "FAQ" => "faq.php",
-                                         "Contact/Donate" => "contact.php");
-                            
-                                    $page = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
-                            
-                                  foreach ($pages as $key => $value)
-                                  {
-                                    if  ($value == $page) {
+                            $pages = array(
+                                "Home" => "index.php",
+                                "Read-Only" => "read-only/index.php",
+                                "Accounts" => "accounts.php",
+                                "Configuration" => "config.php",
+                                "FAQ" => "faq.php",
+                                "Contact/Donate" => "contact.php");
+
+                            $page = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+
+                            foreach ($pages as $key => $value)
+                            {
+                                if  ($value == $page)
+                                {
+                                    $selected = "class='active'";
+                                }
+                                else if ($page == 'allgpus.php')
+                                {
+                                    if ($value == 'index.php')
+                                    {
                                         $selected = "class='active'";
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         $selected = "";
                                     }
-                            
-                                    echo "<li ".$selected."><a href='".$value."'>".$key."</a></li>";
-                                  }
+                                }
+                                else
+                                {
+                                    $selected = "";
+                                }
+                                echo "<li ".$selected."><a href='".$value."'>".$key."</a></li>";
+                            }
                             ?>
                         </ul>
                     </div>
                 </div>
-            </div><!-- /.navbar -->
+            </div>
         </div>
-        <div class="row-fluid">    

@@ -34,75 +34,80 @@ if (isset($_POST['savehostid']))
 		}
 	}
 }
-
 ?>
+
 <?php require('head.inc.php'); ?>
-<div>
-    <h2>Add host</h2>
-</div>
 
-<?php
-if (isset($id)) 
-{
-  if ($host_data)
-  {
-    echo "<b>Host has been added !</b><BR>";
+    <div class="container">
+        <div class="page-header">
+            <div class="row-fluid">
+                <div class="left">
+                    <h1>Add Host</h1>
+                </div>
+            </div>
+        </div>
+        <?php
+            if (isset($id))
+            {
+              if ($host_data)
+              {
+                echo "<b>Host has been added !</b><BR>";
 
-    echo "<table class='acuity' summary='HostSummary' align='center'>";
-    echo create_host_header();
-    echo get_host_status($host_data);
-    echo "</table>";
-  
-    echo "<table class='acuity' summary='PoolSummary' align='center'>";
-    echo create_pool_header();
-    echo process_pools_disp($host_data);
-    echo "</table>";
-  
-    echo "<table class='acuity' summary='DevsSummary' align='center'>";
-    echo create_devs_header();
-    echo process_devs_disp($host_data);
-    echo "</table>";
-  }
-}
-?>
+                echo "<table class='acuity' summary='HostSummary' align='center'>";
+                echo create_host_header();
+                echo get_host_status($host_data);
+                echo "</table>";
 
-<form name=save action="addhost.php" method="post">
+                echo "<table class='acuity' summary='PoolSummary' align='center'>";
+                echo create_pool_header();
+                echo process_pools_disp($host_data);
+                echo "</table>";
 
-<table id="savetable" align=center>
-    <thead>
-    	<tr>
-        	<th scope="col" class="rounded-company">Name</th>
-            <th scope="col" class="rounded-q1">IP / Hostname</th>
-            <th scope="col" class="rounded-q1">Port</th>
-            <th scope="col" class="rounded-q1">MH/s desired</th>
-        </tr>
-        <tr>
-        <td align=center><input type="text" name="macname" value=""></td>
-        <td align=center><input type="text" name="ipaddress" value=""></td>
-        <td align=center><input type="text" name="port" value="4028"></td>
-        <td align=center><input type="text" name="mhash" value=""></td>
-        </tr>
-        <tr>
-        <td colspan=4 align=center><input type=hidden name="savehostid" value="<?php echo $id?>"><input type="submit" value="Save"></td>
-        </tr>
-    </thead>
-</table>
+                echo "<table class='acuity' summary='DevsSummary' align='center'>";
+                echo create_devs_header();
+                echo process_devs_disp($host_data);
+                echo "</table>";
+              }
+            }
+        ?>
 
-</form>
+        <form name=save action="addhost.php" method="post">
+            <table id="savetable" align=center>
+                <thead>
+                    <tr>
+                        <th scope="col" class="rounded-company">Name</th>
+                        <th scope="col" class="rounded-q1">IP / Hostname</th>
+                        <th scope="col" class="rounded-q1">Port</th>
+                        <th scope="col" class="rounded-q1">MH/s desired</th>
+                    </tr>
+                    <tr>
+                        <td align=center><input type="text" name="macname" value=""></td>
+                        <td align=center><input type="text" name="ipaddress" value=""></td>
+                        <td align=center><input type="text" name="port" value="4028"></td>
+                        <td align=center><input type="text" name="mhash" value=""></td>
+                    </tr>
+                    <tr>
+                        <td colspan=4 align=center><input type=hidden name="savehostid" value="<?php echo $id?>"><input type="submit" value="Save"></td>
+                    </tr>
+                </thead>
+            </table>
+        </form>
 
-<p align=center>
-<b>Name:</b> You can enter any name you like.<BR>
-<b>IP/Hostname:</b> Enter the IP or Hostname of your cgminer cgapi enabled host. I.E. 10.10.1.10 or 192.168.1.10. You can also use FQDN so miner1.mynet.com i.e.<BR>
-<b>Port:</b> The port CGMINER is listening on (default 4028)<BR>
-<b>MH/s desired:</b> If you already now how much MH/s your host will/should make, enter it here.<BR>
-<BR>
-You can change any value afterwards.<BR>
-</p>
-</div>
+        <div class="row-fluid">
+            <div class="left">
+                <strong>Name:</strong> You can enter any name you like.<BR \>
+                <strong>IP/Hostname:</strong> Enter the IP or Hostname of your cgminer cgapi enastrongled host. I.E. 10.10.1.10 or 192.168.1.10. You can also use FQDN so miner1.mynet.com i.e.<BR \>
+                <strong>Port:</strong> The port CGMINER is listening on (default 4028)<BR \>
+                <strong>MH/s desired:</strong> If you already now how much MH/s your host will/should make, enter it here.<BR \>
+                <BR \>
+                <strong>Note:</strong> You can change any value afterwards.
+            </div>
+        </div>
+    </div>
+    <div id="push"></div>
 </div>
 
 <?php include("footer.inc.php"); ?>
 
-  
 </body>
 </html>
