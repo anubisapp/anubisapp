@@ -23,7 +23,7 @@ if($host_data = get_host_data($id))
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Anubis - a cgminer web frontend</title>
+<title>AnubisApp - a cgminer web frontend</title>
 
 <?php require('stylesheets.inc.php'); ?>
 

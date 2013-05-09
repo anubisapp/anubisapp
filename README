@@ -4,10 +4,10 @@ Requires:
 PHP >= v5.2
 MySQL >= v5.0 or SQLite >= v3.0 or roll your own
 
-Copy all the files/directories to your web-shared directory in an Anubis sub-
+Copy all the files/directories to your web-shared directory in an AnubisApp sub-
 directory.
 
-Anubis uses the PDO API to connect to databases, so this feature must be enabled
+AnubisApp uses the PDO API to connect to databases, so this feature must be enabled
 in your PHP setup. Consult
 http://php.net/manual/en/book.pdo.php
 on how to do this.
@@ -66,11 +66,11 @@ them, will show with their pool ID in green.
 WRITE ACCESS:
 As of CGMiner version 2.3.0 (API version 1.3), CGMiner has an additional option
 --api-allow to allow write access to the API, that is the ability to make
-changes to CGMiner. To give ANUBIS write privileges, make sure to add the
+changes to CGMiner. To give AnubisApp write privileges, make sure to add the
 webhost IP address with the 'W:' prefix. i.e.
 --api-allow W:192.168.1.1
 See the CGMiner documentation for more details.
-If write access is not granted, all buttons/controls for ANUBIS will be hidden.
+If write access is not granted, all buttons/controls for AnubisApp will be hidden.
 
 HOSTS PAGE:
 The hosts page (the main page), contains the a summary of all the hosts added to

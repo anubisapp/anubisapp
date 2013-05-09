@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Anubis - a cgminer web frontend</title>
+<title>AnubisApp - a cgminer web frontend</title>
 
 <?php require('stylesheets.inc.php'); ?>
 
@@ -58,8 +58,8 @@ ddsmoothmenu.init({
     	<tr>
 	<th>Donations</th></tr><tr>
 	  <td>
-<p>Anubis has taken many hours and hard work to get to the stage it's in. If
-you like Anubis, any donation will be appreciated:
+<p>AnubisApp has taken many hours and hard work to get to the stage it's in. If
+you like AnubisApp, any donation will be appreciated:
 <span style="color: white">1Fxpijq1NN52LzSzD2WtGbT3ZTWq366ejj</span></p>
 
 <p>If you like this theming (dark/black), it was done with a forked copy of the
