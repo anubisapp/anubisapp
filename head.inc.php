@@ -65,7 +65,7 @@
 <div class="wrap">
     <div class="container">
         <div class="masthead">
-            <h3 class="muted">Anubis</h3>
+            <h3 class="muted">AnubisApp</h3>
             <div class="navbar">
                 <div class="navbar-inner">
                     <div class="container">
