@@ -589,7 +589,7 @@ function get_host_summary($host_data)
   }
 
   $host_row = "<tbody><tr>
-    <td><a href=\"edithost.php?id=$hostid\"><img src=\"images/edit.png\" border=0></a> <a href=\"edithost.php?id=$hostid\">$name</a>"
+    <td><a href=\"edithost.php?id=$hostid\"><i class=\"icon icon-edit\"></i> $name</a>"
     . $host_row .
     "</tr></tbody>";
 
