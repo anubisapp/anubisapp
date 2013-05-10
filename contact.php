@@ -9,39 +9,31 @@
                 </div>
             </div>
         </div>
-        <table class="acuity" summary="Hostsummary">
-            <thead>
-                <tr>
-                    <th>Contact</th>
-                </tr>
-                <tr>
-                    <td> You can msg me (<a href="https://bitcointalk.org/index.php?action=profile;u=47656">p_shep</a>) on bitcointalk.org or have a look here: <a href="https://bitcointalk.org/index.php?topic=57342.0">https://bitcointalk.org/index.php?topic=57342.0</a>
-                    </td>
-                </tr>
-                <tr>
-            <th>Donations</th></tr><tr>
-              <td>
-        <p>AnubisApp has taken many hours and hard work to get to the stage it's in. If
-        you like AnubisApp, any donation will be appreciated:
-        <span style="color: white">1Fxpijq1NN52LzSzD2WtGbT3ZTWq366ejj</span></p>
-
-        <p>If you like this theming (dark/black), it was done with a forked copy of the
-        original software by <a href="http://github.com/hank">hank@github</a>. Maybe
-        you could send a small percentage of what you sent to p_shep to the following
-        address: <span style="color:
-        white">1ErikgLXAmxuTk76tdCrRW3iLnX1GS8mFd</span></p>
-                  </td>
-                </tr>
-                <tr>
-                    <th>Thanks</th></tr>
-                <tr>
-                    <td>Many thanks to the orginator OCminer for starting the project. His donation address is: 1KgAKimMrbR6h4R6JBff9s3JqQCS53y149</td>
-                </tr>
-                <tr>
-                    <td>Accounts information retireved from <a href="http://www.blockchain.info/">Blockchain.info</a> and <a href="https://mtgox.com/">Mt.Gox</a> APIs</td>
-                </tr>
-            </thead>
-        </table>
+        <section id="contact">
+            <h4>Contact Us</h4>
+            <p>You can reach us from the following methods:</p>
+            <dl class="dl-horizontal">
+                <dt>Main</dt>
+                <dd><a href="http://anubisapp.com">http://anubisapp.com</a></dd>
+                <dt>GitHub</dt>
+                <dd><a href="https://github.com/anubisapp/anubisapp">https://github.com/anubisapp/anubisapp</a></dd>
+                <dt>IRC</dt>
+                <dd><a href="irc://chat.freenode.net:6667/anubisapp">irc://chat.freenode.net:6667/anubisapp</a></dd>
+            </dl>
+        </section>
+        <section id="donate">
+            <h4>Donate</h4>
+            <p>AnubisApp is ran by a small team, and also open-souce, allowing anyone to contribute. The main donation address is as follows:</p>
+            <dl class="dl-horizontal">
+                <dt>Litecoin</dt>
+                <dd><a href="http://explorer.litecoin.net/address/LUeik9vkG8VpqDd1SGcRVYoeak8T49kG4z">LUeik9vkG8VpqDd1SGcRVYoeak8T49kG4z</a></dd>
+            </dl>
+        </section>
+        <section id="credits">
+            <h4>Credits</h4>
+            <p>Anubis was originally created by <a href="http://github.com/hank">hank@github</a>. Development had stopped at the point we had found it, so we wanted to continue it, improving it as we go. </p>
+            <p>Bitcoin Blockchain data retrieved from <a href="http://www.blockchain.info/">Blockchain.info</a> and <a href="https://mtgox.com/">Mt.Gox</a>.</p>
+        </section>
     </div>
     <div id="push"></div>
 </div>
