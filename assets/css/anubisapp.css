@@ -50,3 +50,6 @@ code {
 .p_b10 {
     padding-bottom:10px;
 }
+.green { background-color: #DFF0D8 !important; }
+.red { background-color: #F2DEDE !important; }
+.yellow { background-color: #FCF8E3 !important; }
