@@ -88,13 +88,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="brand" href="#">AnubisApp</a>
+                    <a class="brand" href="index.php">AnubisApp</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <?php
                             $pages = array(
                                 "Home" => "index.php",
-                                "Read-Only" => "read-only/index.php",
                                 "Accounts" => "accounts.php",
                                 "Configuration" => "config.php",
                                 "FAQ" => "faq.php",
