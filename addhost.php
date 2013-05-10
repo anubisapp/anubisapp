@@ -5,34 +5,69 @@ require("func.inc.php");
 
 $dbh = anubis_db_connect();
 
-if (isset($_POST['savehostid']))
+// Required field names
+$required = array('name', 'ipaddress', 'port');
+$error = false;
+
+$id = (isset($_POST['savehostid'])) ? 0 + $_POST['savehostid'] : NULL;
+$name = (isset($_POST['name'])) ? $_POST['name'] : NULL;
+$address = (isset($_POST['ipaddress'])) ? $_POST['ipaddress'] : NULL;
+$port = (isset($_POST['port'])) ? $_POST['port'] : '4028';
+$hash = (isset($_POST['hash'])) ? $_POST['hash'] : NULL;
+
+$errored = array();
+foreach($required as $field)
 {
-	$id = 0 + $_POST['savehostid'];
-	$newname = $dbh->quote($_POST['macname']);
-	$address = $dbh->quote($_POST['ipaddress']);
-	$port = $dbh->quote($_POST['port']);
-	$mhash = $dbh->quote($_POST['mhash']);
+    if (empty($_POST[$field]))
+    {
+        $error = true;
+        $errored[] = $field;
+    }
+}
+$errorFields = implode(", ", $errored);
 
-	if ($newname && $newname !== "" && $address && $address !== "") {
-		$updq = "INSERT INTO hosts (name, address, port, mhash_desired) VALUES ($newname, $address, $port, $mhash)";
-		$updr = $dbh->exec($updq);
-		db_error();
+if ($error)
+{
+    $message = '<strong>Error!</strong> Please fill in a <strong>'.$errorFields.'</strong> to add a host!';
+    $type = 'alert-error';
+}
+else
+{
+    if ($name && $name !== "" && $address && $address !== "" && $port && $port !== "")
+    {
+        $dbname = $dbh->quote($name);
+        $dbaddress = $dbh->quote($address);
+        $dbport = $dbh->quote($port);
+        $dbhash = $dbh->quote($hash);
 
-		if ($updr > 0)
-		{
-			$askq = "SELECT id FROM hosts WHERE address = $address AND name = $newname";
-			$askr = $dbh->query($askq);
-			db_error();
+        $updq = "INSERT INTO hosts (name, address, port, mhash_desired) VALUES ($dbname, $dbaddress, $dbport, $dbhash)";
+        $updr = $dbh->exec($updq);
+        db_error();
 
-			$idr = $askr->fetch(PDO::FETCH_ASSOC);
-			$id = $idr['id'];
+        if ($updr > 0)
+        {
+            $askq = "SELECT id FROM hosts WHERE address = $dbaddress AND name = $dbname";
+            $askr = $dbh->query($askq);
+            db_error();
+
+            $idr = $askr->fetch(PDO::FETCH_ASSOC);
+            $id = $idr['id'];
 
             $id = $dbh->quote($id);
 
             $host_data = get_host_data($id);
-			db_error();
-		}
-	}
+            db_error();
+        }
+    }
+
+    if (isset($id))
+    {
+        if ($host_data)
+        {
+            $message = '<strong>Success!</strong> The host <strong>'.$name.'</strong> has been added!';
+            $type = 'alert-success';
+        }
+    }
 }
 ?>
 
@@ -40,67 +75,42 @@ if (isset($_POST['savehostid']))
 
     <div class="container">
         <div class="page-header">
+            <?php if ($_POST) echo alert($message, $type); ?>
             <div class="row-fluid">
                 <div class="left">
                     <h1>Add Host</h1>
                 </div>
+                <div class="right">
+                    <a href="/" class="btn pull-right">Back to Overview</a>
+                </div>
             </div>
         </div>
-        <?php
-            if (isset($id))
-            {
-              if ($host_data)
-              {
-                echo "<b>Host has been added !</b><BR>";
+        <form type="submit" action="" method="post">
+            <fieldset>
+                <label><strong>Name</strong></label>
+                <input type="text" name="name" placeholder="my.hostname.com" value="<?php echo $name ?>" required>
+                <span class="help-block">Name your CGMINER host.</span>
 
-                echo "<table class='acuity' summary='HostSummary' align='center'>";
-                echo create_host_header();
-                echo get_host_status($host_data);
-                echo "</table>";
+                <label><strong>IP / Hostname</strong></label>
+                <input type="text" name="ipaddress" placeholder="192.168.0.1" value="<?php echo $address ?>" required>
+                <span class="help-block">Enter the IP or FQDN of your API enabled CGMINER host.</span>
 
-                echo "<table class='acuity' summary='PoolSummary' align='center'>";
-                echo create_pool_header();
-                echo process_pools_disp($host_data);
-                echo "</table>";
+                <label><strong>Port</strong></label>
+                <input type="text" name="port" placeholder="4028" value="<?php echo $port ?>" required>
+                <span class="help-block">Enter the port CGMINER is listening on (default 4028).</span>
 
-                echo "<table class='acuity' summary='DevsSummary' align='center'>";
-                echo create_devs_header();
-                echo process_devs_disp($host_data);
-                echo "</table>";
-              }
-            }
-        ?>
+                <label><strong>Desired Hashrate</strong></label>
+                <input type="text" name="hash" value="<?php echo $hash ?>">
+                <span class="help-block">Set a desired hashare or leave it empty for maximum hashate.</span>
 
-        <form name=save action="addhost.php" method="post">
-            <table id="savetable" align=center>
-                <thead>
-                    <tr>
-                        <th scope="col" class="rounded-company">Name</th>
-                        <th scope="col" class="rounded-q1">IP / Hostname</th>
-                        <th scope="col" class="rounded-q1">Port</th>
-                        <th scope="col" class="rounded-q1">MH/s desired</th>
-                    </tr>
-                    <tr>
-                        <td align=center><input type="text" name="macname" value=""></td>
-                        <td align=center><input type="text" name="ipaddress" value=""></td>
-                        <td align=center><input type="text" name="port" value="4028"></td>
-                        <td align=center><input type="text" name="mhash" value=""></td>
-                    </tr>
-                    <tr>
-                        <td colspan=4 align=center><input type=hidden name="savehostid" value="<?php echo $id?>"><input type="submit" value="Save"></td>
-                    </tr>
-                </thead>
-            </table>
+                <input type=hidden name="savehostid" value="<?php echo $id ?>">
+                <button type="submit" class="m_t10 btn btn-primary">Submit</button>
+            </fieldset>
         </form>
 
         <div class="row-fluid">
             <div class="left">
-                <strong>Name:</strong> You can enter any name you like.<BR \>
-                <strong>IP/Hostname:</strong> Enter the IP or Hostname of your cgminer cgapi enastrongled host. I.E. 10.10.1.10 or 192.168.1.10. You can also use FQDN so miner1.mynet.com i.e.<BR \>
-                <strong>Port:</strong> The port CGMINER is listening on (default 4028)<BR \>
-                <strong>MH/s desired:</strong> If you already now how much MH/s your host will/should make, enter it here.<BR \>
-                <BR \>
-                <strong>Note:</strong> You can change any value afterwards.
+                <span class=""><strong>Note:</strong> You can change any value afterwards.</span>
             </div>
         </div>
     </div>

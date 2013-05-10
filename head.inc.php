@@ -21,62 +21,12 @@
     <meta name="author" content="">
 
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-
-    <style type="text/css">
-    html,
-    body {
-        height: 100%;
-    }
-
-    #wrap {
-        min-height: 100%;
-        height: auto !important;
-        height: 100%;
-        margin: 0 auto -60px;
-    }
-
-    #push, #footer {
-        height: 60px;
-    }
-    #footer {
-        background-color: #f5f5f5;
-    }
-
-    @media (max-width: 767px) {
-        #footer {
-            margin-left: -20px;
-            margin-right: -20px;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-    }
-    #wrap > .container {
-        padding-top: 60px;
-    }
-    .container .credit {
-        margin: 20px 0;
-    }
-
-    code {
-        font-size: 80%;
-    }
-
-    .left {
-        float: left !important;
-    }
-    .right{
-        float: right !important;
-    }
-    </style>
-
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="assets/css/anubisapp.css" rel="stylesheet">
     <!--[if IE]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div id="wrap">

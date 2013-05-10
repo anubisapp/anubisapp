@@ -1,6 +1,6 @@
 <?php
 error_reporting('E_ALL');
-ini_set('display_errors','On'); 
+ini_set('display_errors','On');
 // Globals
 $host_data = null;
 $host_alive = false;
@@ -8,17 +8,17 @@ $privileged = false;
 $data_totals = array('hosts'=>0,
                      'devs'=>0,
                      'activedevs'=>0,
-                     'maxtemp'=>0, 
+                     'maxtemp'=>0,
                      'desmhash'=>0,
                      'utility'=>0,
                      'Wutility'=>0,
 					 'fivesmhash'=>0,
                      'avemhash'=>0,
                      'getworks'=>0,
-                     'accepts'=>0, 
-                     'rejects'=>0, 
+                     'accepts'=>0,
+                     'rejects'=>0,
                      'discards'=>0,
-                     'stales'=>0, 
+                     'stales'=>0,
                      'getfails'=>0,
                      'remfails'=>0);
 // Number of significant digits
@@ -126,7 +126,7 @@ function readsockline($socket)
 function send_request_to_host($cmd_array, $host_data)
 {
   $socket = getsock($host_data['address'], $host_data['port']);
-  
+
   if ($socket != null)
   {
     $cmd = json_encode($cmd_array);
@@ -172,7 +172,7 @@ function get_host_status($host_data)
     {
       $API_version = $version_arr['VERSION'][0]['API'];
       $CGM_version = $version_arr['VERSION'][0]['CGMiner'];
-      
+
       if (version_compare($API_version, 1.0, '>='))
         return true;
     }
@@ -199,7 +199,7 @@ function get_privileged_status($host_data)
     if ($response['STATUS'][0]['STATUS'] == 'S')
       return true;
   }
-  else 
+  else
     return true;
 
   return false;
@@ -324,14 +324,14 @@ function create_host_header()
             <th scope='col' class='rounded-q1'>Rem Fails</th>
         </tr>
     </thead>";
-    
+
     return $header;
 }
 
 /*****************************************************************************
 /*  Function:    process_host_devs()
 /*  Description: processes the array of devices from a host
-/*               Retreives the number of devices, total 5s hash rate and max 
+/*               Retreives the number of devices, total 5s hash rate and max
 /*               temperature of the devices attached to the host
 /*  Inputs:      dev_data_array - the array of devices
 /*  Outputs:     return - number of devices
@@ -342,7 +342,7 @@ function create_host_header()
 function process_host_devs($dev_data_array, &$activedevs, &$host5shash, &$maxtemp)
 {
   global $pools_in_use;
-  
+
   $devs = 0;
   $activedevs = 0;
   $host5shash = 0;
@@ -355,8 +355,8 @@ function process_host_devs($dev_data_array, &$activedevs, &$host5shash, &$maxtem
     # and such.
     $def5shash = preg_grep('/MHS \d/', array_keys($dev_data_array['DEVS'][$devs]));
     # We have to find the value for the key we just found
-if(is_array(array_values($def5shash)) and 
-   is_array($dev_data_array['DEVS']) and 
+if(is_array(array_values($def5shash)) and
+   is_array($dev_data_array['DEVS']) and
    is_array($dev_data_array['DEVS'][$devs])) {
     $index = array_values($def5shash);
     $index = $index[0];
@@ -374,10 +374,10 @@ if(is_array(array_values($def5shash)) and
 
     if ($maxtemp < $temp)
       $maxtemp = $temp;
-    
+
     /* Find which pools are in use */
     $pools_in_use[$dev_data_array['DEVS'][$devs]['Last Share Pool']] = true;
-    
+
     $devs++;
   }
 
@@ -398,10 +398,10 @@ function process_host_info($host_data)
 
   $arr = array ('command'=>'config','parameter'=>'');
   $config_arr = send_request_to_host($arr, $host_data);
-  
+
   $arr = array ('command'=>'summary','parameter'=>'');
   $summary_arr = send_request_to_host($arr, $host_data);
-  
+
   $up_time = $summary_arr['SUMMARY']['0']['Elapsed'];
   $days = floor($up_time / 86400);
   $up_time -= $days * 86400;
@@ -409,7 +409,7 @@ function process_host_info($host_data)
   $up_time -= $hours * 3600;
   $mins = floor($up_time / 60);
   $seconds = $up_time - ($mins * 60);
-  
+
   $output = "
       <tr>
         <th>CG ver</th>
@@ -440,7 +440,7 @@ function process_host_info($host_data)
   	  <tr>
   	    <th colspan='11''><span class='pull-right'><button type='button' class='btn' name='config_submit' value='config_submit'>Submit</button></span></th>
       </tr>";
-  
+
 
   return $output;
 }
@@ -478,7 +478,7 @@ function process_host_disp($desmhash, $summary_data_array, $dev_data_array)
     $utility =    $summary_data_array['SUMMARY'][0]['Utility'];
     $Wutility =    $summary_data_array['SUMMARY'][0]['Work Utility'];
     $getworks =    $summary_data_array['SUMMARY'][0]['Getworks'];
-    
+
     if (isset($accepted) && $accepted !== 0)
     {
       $efficency = number_format(100 / $getworks * $accepted, $sigdigs, ".", "") . " %";
@@ -487,7 +487,7 @@ function process_host_disp($desmhash, $summary_data_array, $dev_data_array)
       $stales = number_format(100 / $accepted * $stale, $sigdigs, ".", "") . " %";
       $getfails = number_format(100 / $accepted * $getfail, $sigdigs, ".", "") . " %";
       $remfails = number_format(100 / $accepted * $remfail, $sigdigs, ".", "") . " %";
-      
+
       $rejectscol = set_color_high($rejects, $config->yellowrejects, $config->maxrejects);     // Rejects
       $discardscol = set_color_high($discards, $config->yellowdiscards, $config->maxdiscards); // Discards
       $stalescol = set_color_high($stales, $config->yellowstales, $config->maxstales);         // Stales
@@ -509,14 +509,14 @@ function process_host_disp($desmhash, $summary_data_array, $dev_data_array)
     // Temperature
     // Set red on zero value
     if($max_temp == 0) $max_temp = $config->maxtemp;
-    if($config->yellowtemp == 0 and $config->maxtemp == 0) 
+    if($config->yellowtemp == 0 and $config->maxtemp == 0)
 	$tempcol = "class=green";
-    else 
+    else
 	$tempcol = set_color_high($max_temp, $config->yellowtemp, $config->maxtemp);
              // host status
-    $thisstatuscol = ($thisstatus == "S") ? "class=green" : "class=yellow";     
+    $thisstatuscol = ($thisstatus == "S") ? "class=green" : "class=yellow";
              // active devs
-    $thisdevcol = ($activedevs == $devs) ? "class=green" : "class=red";         
+    $thisdevcol = ($activedevs == $devs) ? "class=green" : "class=red";
 
 	$row = "
       <td $thisdevcol>$activedevs/$devs</td>
@@ -626,7 +626,7 @@ $header =
             <th scope='col' class='rounded-q1'>Intens</th>
         </tr>
     </thead>";
-    
+
     return $header;
 }
 
@@ -658,14 +658,14 @@ function process_dev_disp($gpu_data_array, $edit=false)
   // Temperature
   // Set red on zero value
   if($max_temp == 0) $max_temp = $config->maxtemp;
-  if($config->yellowtemp == 0 and $config->maxtemp == 0) 
+  if($config->yellowtemp == 0 and $config->maxtemp == 0)
 	$tempcol = "class=green";
-  else 
+  else
   	$tmpcol = set_color_high($gpu_data_array['Temperature'], $config->yellowtemp, $config->maxtemp);
   // Fans
   if($config->yellowfan == 0 and $config->maxfan == 0) $fancol = "class=green";
   else $fancol = set_color_high($gpu_data_array['Fan Percent'], $config->yellowfan, $config->maxfan);
-  
+
   /* format fan speeds */
   $fanspeed = ($gpu_data_array['Fan Speed'] == '-1') ? '---' : $gpu_data_array['Fan Speed'];
   $fanpercent = ($gpu_data_array['Fan Percent'] == '-1') ? '---' : $gpu_data_array['Fan Percent']. " %";
@@ -682,7 +682,7 @@ function process_dev_disp($gpu_data_array, $edit=false)
     "<td>---</td>";
 
   $button = $gpu_data_array['Enabled'];
-  
+
   if(($gpu_data_array['Status'] != "Alive"))
     $button_disable = " disabled='disabled'";
 
@@ -726,7 +726,7 @@ function process_dev_disp($gpu_data_array, $edit=false)
       <td>".$gpu_data_array['GPU Voltage']."</td>
       <td>".$gpu_data_array['GPU Activity']." %</td>";
 
-    $GPU_specific2 = 
+    $GPU_specific2 =
       "<td>".$gpu_data_array['Intensity']."</td>";
   }
   else if (isset($gpu_data_array['PGA']))
@@ -745,7 +745,7 @@ function process_dev_disp($gpu_data_array, $edit=false)
   {
     $DEV_cell = $gpu_data_array['Name'] . $gpu_data_array['CPU'];
   }
-  
+
   $diff_1_utill = round($gpu_data_array['Utility']*$gpu_data_array['Difficulty Accepted']/$accepted,2);
 
   # Handle -l parameters in cgminer that change this key from MHS 5s to 2s
@@ -889,7 +889,7 @@ function process_pool_disp($pool_data_array, $edit=false)
   $stale =      $pool_data_array['Stale'];
   $getfail =    $pool_data_array['Get Failures'];
   $remfail =    $pool_data_array['Remote Failures'];
-  $difficulty = round($pool_data_array['Difficulty Accepted']/$pool_data_array['Accepted'],2);  
+  $difficulty = round($pool_data_array['Difficulty Accepted']/$pool_data_array['Accepted'],2);
 
   /* set shares colours */
   if (isset($accepted) && $accepted !== 0)
@@ -923,7 +923,7 @@ function process_pool_disp($pool_data_array, $edit=false)
   {
     $disable_button = ($pool_data_array['Priority'] == '0') ? " disabled='disabled'" : "";
     $top_button = " <button type='submit' name='toppool' value='".$pool_data_array['POOL']. "' " . $disable_button.">Top</button>";
-    
+
     if($pool_data_array['Status'] == "Alive")
       $start_stop_button = " <button type='submit' name='stoppool' value='".$pool_data_array['POOL']."'>Stop</button>";
     else if ($pool_data_array['Status'] == "Disabled")
@@ -934,12 +934,12 @@ function process_pool_disp($pool_data_array, $edit=false)
     if (version_compare($API_version, 1.7, '>='))
       $start_stop_button .= "<button type='submit' name='rempool' value='".$pool_data_array['POOL']."'>Delete</button>";
   }
-  
+
   /*Set in-use colour */
   $poolcol = "";
   if ($pools_in_use[$pool_data_array['POOL']] == true)
     $poolcol = "class=green";
-    
+
   $row = "<tr>
   <td $poolcol>".$pool_data_array['POOL']."</td>
   <td>".$pool_data_array['Priority'].$top_button."</td>
@@ -1149,7 +1149,7 @@ function create_devdetails_header()
 
 /*****************************************************************************
 /*  Function:    process_devdetails_disp()
-/*  Description: processes a single item of the device details array of a host 
+/*  Description: processes a single item of the device details array of a host
 /*               for html display
 /*  Inputs:      dev_data_array - the device detail array data.
 /*  Outputs:     return - the row in html
@@ -1157,10 +1157,10 @@ function create_devdetails_header()
 function process_devdetails_disp($dev_data_array)
 {
   $button = '';
-  
-  if ($dev_data_array['Name'] == 'BFL')      
+
+  if ($dev_data_array['Name'] == 'BFL')
   	$button = " &nbsp;<button type='submit' name='flashpga' value='".$dev_data_array['ID']."'>Blink</button>";
-  
+
   $row = "<tr>
   <td>".$dev_data_array['Name'] . $dev_data_array['ID'] . $button ."</td>
   <td>".$dev_data_array['Driver']."</td>
@@ -1221,7 +1221,7 @@ function create_stats_header()
 function process_stats_disp($stats_data_array)
 {
   $row = "<tr>";
-  
+
   while (list($key, $val) = each($stats_data_array))
   {
     if ($key != 'STATS')
@@ -1234,7 +1234,7 @@ function process_stats_disp($stats_data_array)
         $val -= $hours * 3600;
         $mins = floor($val / 60);
         $seconds = $val - ($mins * 60);
-        
+
         $val = $days."d ".$hours."h ".$mins."m ".$seconds."s";
       }
 
@@ -1279,34 +1279,48 @@ function process_stats_table($host_data)
 function process_debug_info($host_data)
 {
     global $debug_param_arr;
-	
+
   	$arr = array ('command'=>'debug','parameter'=>'');
   	$debug_arr = send_request_to_host($arr, $host_data);
 
   	$output = '<tr>';
   	foreach ($debug_param_arr as $param)
-  		$output .= "<th> $param </th>"; 			
+  		$output .= "<th> $param </th>";
   	$output .= '</tr></tr>';
-  	 
+
   	foreach ($debug_param_arr as $param)
   	{
   		if ($debug_arr['DEBUG']['0'][$param])
   			$checked = 'checked';
   		else
   			$checked = '';
-  				
-  		$output .= "<td><input type='checkbox' value=$param name=$param $checked ></td>";			
+
+  		$output .= "<td><input type='checkbox' value=$param name=$param $checked ></td>";
   	}
-  	
-  	$output .= "<tr><th colspan=7>Select debug level and click submit, or click default to reset to defaults &nbsp; 
+
+  	$output .= "<tr><th colspan=7>Select debug level and click submit, or click default to reset to defaults &nbsp;
   	            <span class='pull-right'>
                 <button type='submit' class='btn' name='debug_submit' value='debug'>Submit</button>
   	            <button type='submit' class='btn' name='default_submit' value='debug'>Default</button>
                 </span>
   	            </th><tr>";
-  	 
+
   return $output;
 }
 
+function alert($message, $type = NULL)
+{
+    $output = '<div class="alert '.$type.'">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              '.$message.'
+              <script>
+                    window.setTimeout(function() {
+                        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                            $(this).remove();
+                        });
+                    }, 5000);
+                </script>
+            </div>';
+    return $output;
+}
 ?>
-
