@@ -25,8 +25,22 @@
             <h4>Donate</h4>
             <p>AnubisApp is ran by a small team, and also open-souce, allowing anyone to contribute. The main donation address is as follows:</p>
             <dl class="dl-horizontal">
-                <dt>Litecoin</dt>
-                <dd><a href="http://explorer.litecoin.net/address/LUeik9vkG8VpqDd1SGcRVYoeak8T49kG4z">LUeik9vkG8VpqDd1SGcRVYoeak8T49kG4z</a></dd>
+                <dt>BTC</dt>
+                <dd>1PgHDURcpxc2HHoAGoBoJxGPcPVNnX1UEA</dd>
+                <dt>LTC</dt>
+                <dd>LKZyJWqVgQPYms1nr2ATLrzQNqsHSNjAtQ</dd>
+                <dt>NMC</dt>
+                <dd>N8QT59kXVAjx6YiAC532sxK7VSMVSswZTB</dd>
+                <dt>NVC</dt>
+                <dd>4cpkJgSrLmnkMbSTz7cKPVtKQfM2G3SzrL</dd>
+                <dt>TRC</dt>
+                <dd>17gFGQre6ZLWTMtkJsbuqwk7TLh9T7pFt7</dd>
+                <dt>PPC</dt>
+                <dd>PAurDBVh2x9TTDFqqLQrnnHbytDw9gyhqq</dd>
+                <dt>FTC</dt>
+                <dd>6xwKKTfM2jAoXi7QYqXnL27Bz5gsGpYmFs</dd>
+                <dt>CNC</dt>
+                <dd>CYXdjRgoCwdon9RgCKcaRdzEqEbyYmTvsZ</dd>
             </dl>
         </section>
         <section id="credits">
