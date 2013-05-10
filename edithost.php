@@ -280,9 +280,9 @@ if($host_data = get_host_data($id))
 
         <form name="save" class="form-inline" action="edithost.php?id=<?php echo $id?>" method="post">
             <label for="name">Name</label> <input type="text" id="name" value="<?php echo $host_data['name']?>">
-            <label for="name">IP / Hostname</label> <input type="text" id="hostname" value="<?php echo $host_data['address']?>">
-            <label for="name">Port</label> <input type="text" id="port" value="<?php echo $host_data['port']?>">
-            <label for="name">MH/s desired</label> <input type="text" id="speed" value="<?php echo $host_data['mhash_desired']?>">
+            <label for="hostname">IP / Hostname</label> <input type="text" id="hostname" value="<?php echo $host_data['address']?>">
+            <label for="port">Port</label> <input type="text" id="port" value="<?php echo $host_data['port']?>">
+            <label for="speed">MH/s desired</label> <input type="text" id="speed" value="<?php echo $host_data['mhash_desired']?>">
             <input type=hidden name="savehostid" value="<?php echo $id?>">
             <div style="margin-top:10px;" class="pull-right">
                 <button type="submit" class="btn btn-primary" name="save">Save</button>
