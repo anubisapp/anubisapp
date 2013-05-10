@@ -94,7 +94,6 @@
                             <?php
                             $pages = array(
                                 "Home" => "index.php",
-                                "Accounts" => "accounts.php",
                                 "Configuration" => "config.php",
                                 "FAQ" => "faq.php",
                                 "Contact/Donate" => "contact.php");
