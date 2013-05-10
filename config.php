@@ -1,114 +1,41 @@
 <?php
 require("config.inc.php");
+require("func.inc.php");
 
 $dbh = anubis_db_connect();
 
 if (isset($_POST['saveconf'])) {
+    $error = false;
+    $fieldList = array('updatetime', 'yellowtemp', 'maxtemp', 'yellowrejects', 'maxrejects', 'yellowdiscards', 'maxdiscards', 'yellowstales', 'maxstales', 'yellowgetfails', 'maxgetfails', 'yellowremfails', 'maxremfails', 'yellowfan', 'maxfan', 'yellowgessper', 'maxgessper', 'yellowavgmhper', 'email');
 	$updstring = "";
 
-	if (isset($_POST['updatetime'])) {
-		$updatetime = $dbh->quote($_POST['updatetime']);
-		$updstring = $updstring . " updatetime = $updatetime, ";
-	}
+    foreach ($fieldList as $field) {
+        if (!empty($_POST[$field])) {
+            $updstring .= $field." = ".$dbh->quote($_POST[$field]).", ";
+        } else {
+            $error = true;
+            $errored[] = $field;
+        }
+    }
 
-	if (isset($_POST['yellowtemp'])) {
-		$yellowtemp = $dbh->quote($_POST['yellowtemp']);
-		$updstring = $updstring . " yellowtemp = $yellowtemp, ";
-	}
-
-	if (isset($_POST['maxtemp'])) {
-		$maxtemp = $dbh->quote($_POST['maxtemp']);
-		$updstring = $updstring . " maxtemp = $maxtemp, ";
-	}
-
-	if (isset($_POST['yellowrejects'])) {
-		$yellowrejects = $dbh->quote($_POST['yellowrejects']);
-		$updstring = $updstring . " yellowrejects = $yellowrejects, ";
-	}
-
-	if (isset($_POST['maxrejects'])) {
-		$maxrejects = $dbh->quote($_POST['maxrejects']);
-		$updstring = $updstring . " maxrejects = $maxrejects, ";
-	}
-
-	if (isset($_POST['yellowdiscards'])) {
-		$yellowdiscards = $dbh->quote($_POST['yellowdiscards']);
-		$updstring = $updstring . " yellowdiscards = $yellowdiscards, ";
-	}
-
-	if (isset($_POST['maxdiscards'])) {
-		$maxdiscards = $dbh->quote($_POST['maxdiscards']);
-		$updstring = $updstring . " maxdiscards = $maxdiscards, ";
-	}
-
-	if (isset($_POST['yellowstales'])) {
-		$yellowstales = $dbh->quote($_POST['yellowstales']);
-		$updstring = $updstring . " yellowstales = $yellowstales, ";
-	}
-
-	if (isset($_POST['maxstales'])) {
-		$maxstales = $dbh->quote($_POST['maxstales']);
-		$updstring = $updstring . " maxstales = $maxstales, ";
-	}
-
-	if (isset($_POST['yellowgetfails'])) {
-		$yellowgetfails = $dbh->quote($_POST['yellowgetfails']);
-		$updstring = $updstring . " yellowgetfails = $yellowgetfails, ";
-	}
-
-	if (isset($_POST['maxgetfails'])) {
-		$maxgetfails = $dbh->quote($_POST['maxgetfails']);
-		$updstring = $updstring . " maxgetfails = $maxgetfails, ";
-	}
-
-	if (isset($_POST['yellowremfails'])) {
-		$yellowremfails = $dbh->quote($_POST['yellowremfails']);
-		$updstring = $updstring . " yellowremfails = $yellowremfails, ";
-	}
-
-	if (isset($_POST['maxremfails'])) {
-		$maxremfails = $dbh->quote($_POST['maxremfails']);
-		$updstring = $updstring . " maxremfails = $maxremfails, ";
-	}
-
-	if (isset($_POST['yellowfan'])) {
-		$yellowfan = $dbh->quote($_POST['yellowfan']);
-		$updstring = $updstring . " yellowfan = $yellowfan, ";
-	}
-
-	if (isset($_POST['maxfan'])) {
-		$maxfan = $dbh->quote($_POST['maxfan']);
-		$updstring = $updstring . " maxfan = $maxfan, ";
-	}
-
-	if (isset($_POST['yellowgessper'])) {
-		$yellowgessper = $dbh->quote($_POST['yellowgessper']);
-		$updstring = $updstring . " yellowgessper = $yellowgessper, ";
-	}
-
-	if (isset($_POST['maxgessper'])) {
-		$maxgessper = $dbh->quote($_POST['maxgessper']);
-		$updstring = $updstring . " maxgessper = $maxgessper, ";
-	}
-
-	if (isset($_POST['yellowavgmhper'])) {
-		$yellowavgmhper = $dbh->quote($_POST['yellowavgmhper']);
-		$updstring = $updstring . " yellowavgmhper = $yellowavgmhper, ";
-	}
-
-	if (isset($_POST['email'])) {
-		$email = $dbh->quote($_POST['email']);
-		$updstring = $updstring . " email = $email, ";
-	}
-
-	$updstring = substr($updstring,0,-2);
-
-	$updstring = "UPDATE configuration SET ".$updstring."";
-	$updcr = $dbh->query($updstring);
-	if (!db_error())
-      $updated = 1;
-
-	//echo "Final Updstring: $updstring !";
+    if (!$error) {
+        
+        $updstring = substr($updstring,0,-2);
+        $updstring = "UPDATE configuration SET ".$updstring."";
+        $updcr = $dbh->query($updstring);
+        
+        if (db_error()) {
+            $message = '<strong>Error</strong> Could not save the configuration settings.';
+            $type = 'alert-error';
+        } else {
+            $message = '<strong>Success!</strong> Your configuration has been updated successfully.';
+            $type = 'alert-success';
+        }
+    } else {
+        $errorFields = implode(", ", $errored);
+        $message = '<strong>Error!</strong> Please fill in '.$errorFields.'.';
+        $type = 'alert-error';
+    }
 }
 
 $configq = $dbh->query('SELECT * FROM configuration');
@@ -122,84 +49,162 @@ $config = $configq->fetch(PDO::FETCH_OBJ);
 
     <div class="container">
         <div class="page-header">
+            <?php 
+                if (isset($_POST['saveconf'])) 
+                    echo alert($message, $type); 
+            ?>
             <div class="row-fluid">
                 <div class="left">
                     <h1>Configuration</h1>
                 </div>
             </div>
         </div>
-		<?php
-			if (isset($updated) && $updated == 1)
-				echo "<b>Configuration updated !</b>";
-		?>
 
-		<form id="save" name="save" action="config.php" method="post">
-			<table class="acuity" summary="Hostsummary" align="left">
-			    <thead>
-			    	<tr>
-			    		<th scope="col" class="rounded-company">Value</th>
-			        	<th scope="col" class="rounded-company">Yellow</th>
-			            <th scope="col" class="rounded-q1">Red</th>
-
-			        </tr>
-			        <tr>
-			        <td class="blue">Hashrate Update Timer (seconds)</td>
-			        <td><input type="text" class="input-mini" name="updatetime" value="<?php echo $config->updatetime?>"></td>
-			        </tr>
-			        <tr>
-			        <td class="blue">GPU Temperature</td>
-			        <td><input type="text" class="input-mini" name="yellowtemp" value="<?php echo $config->yellowtemp?>"></td>
-			        <td><input type="text" class="input-mini" name="maxtemp" value="<?php echo $config->maxtemp?>"></td>
-			        </tr>
-			        <tr>
-			        <td class="blue">Rejects</td>
-			        <td><input type="text" class="input-mini" name="yellowrejects" value="<?php echo $config->yellowrejects?>"></td>
-			        <td><input type="text" class="input-mini" name="maxrejects" value="<?php echo $config->maxrejects?>"></td>
-			        </tr>
-			        <tr>
-			        <td class="blue">Discards</td>
-			        <td><input type="text" class="input-mini" name="yellowdiscards" value="<?php echo $config->yellowdiscards?>"></td>
-			        <td><input type="text" class="input-mini" name="maxdiscards" value="<?php echo $config->maxdiscards?>"></td>
-			        </tr>
-			        <tr>
-			        <td class="blue">Stales</td>
-			        <td><input type="text" class="input-mini" name="yellowstales" value="<?php echo $config->yellowstales?>"></td>
-			        <td><input type="text" class="input-mini" name="maxstales" value="<?php echo $config->maxstales?>"></td>
-			        </tr>
-			        <tr>
-			        <td class="blue">Get Fails</td>
-			        <td><input type="text" class="input-mini" name="yellowgetfails" value="<?php echo $config->yellowgetfails?>"></td>
-			        <td><input type="text" class="input-mini" name="maxgetfails" value="<?php echo $config->maxgetfails?>"></td>
-			        </tr>
-			        <tr>
-			        <td class="blue">Rem Fails</td>
-			        <td><input type="text" class="input-mini" name="yellowremfails" value="<?php echo $config->yellowremfails?>"></td>
-			        <td><input type="text" class="input-mini" name="maxremfails" value="<?php echo $config->maxremfails?>"></td>
-			        </tr>
-			        <tr>
-			        <td class="blue">Fan Percent</td>
-			        <td><input type="text" class="input-mini" name="yellowfan" value="<?php echo $config->yellowfan?>"></td>
-			        <td><input type="text" class="input-mini" name="maxfan" value="<?php echo $config->maxfan?>"></td>
-			        </tr>
-			        <tr>
-			        <td class="blue">min. % of desired 5s MH/s</td>
-			        <td><input type="text" class="input-mini" name="yellowgessper" value="<?php echo $config->yellowgessper?>"></td>
-			        <td><input type="text" class="input-mini" name="maxgessper" value="<?php echo $config->maxgessper?>"></td>
-			        </tr>
-			        <tr>
-			        <td class="blue">min. % of desired average MH/s</td>
-			        <td><input type="text" class="input-mini" name="yellowavgmhper" value="<?php echo $config->yellowavgmhper?>"></td>
-			        <td><input type="text" class="input-mini" name="maxavgmhper" value="<?php echo $config->maxavgmhper?>"></td>
-			        </tr>
-			        <tr>
-			        <td class="blue">E-Mail Address for Notifications</td>
-			        <td colspan=2><input type="text" name="email" value="<?php echo $config->email?>"></td>
-			        </tr>
-			        <tr>
-			        <td colspan="3" class="pull-right"><button type="submit" name="saveconf" class="btn">Save</button></td>
-			        </tr>
-			    </thead>
-			</table>
+		<form id="save" name="save" action="config.php" method="post" class="form-horizontal">
+            <div class="row-fluid">
+                <div class="span6">
+                    <h4>General</h4>
+                    <hr>
+                    <div class="control-group">
+                        <label class="control-label" for="updatetime">Refresh Rate (seconds)</label>
+                        <div class="controls">
+                            <input type="text" name="updatetime" class="input-mini" placeholder="5" value="<?php echo $config->updatetime?>">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="email">Notification Address</label>
+                        <div class="controls">
+                            <input type="text" name="email" placeholder="some@email.com" value="<?php echo $config->email?>">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="yellowtemp">GPU Temperature</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" name="yellowtemp" class="input-mini" placeholder="80" value="<?php echo $config->yellowtemp?>">
+                                <span class="add-on">&deg;C</span>
+                            </div>
+                            <div class="input-append">
+                                <input type="text" name="maxtemp" class="input-mini" placeholder="85" value="<?php echo $config->maxtemp?>">
+                                <span class="add-on">&deg;C</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4>Efficiency</h4>
+                    <hr>
+                    <div class="control-group">
+                        <label class="control-label" for="yellowgessper">min. % of desired 5s MH/s</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" name="yellowgessper" class="input-mini" placeholder="95" value="<?php echo $config->yellowgessper?>">              
+                                <span class="add-on">%</span>
+                            </div>
+                            <div class="input-append">
+                                <input type="text" name="maxgessper" class="input-mini" placeholder="90" value="<?php echo $config->maxgessper?>">             
+                                <span class="add-on">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="yellowavgmhper">min. % of desired average MH/s</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" name="yellowavgmhper" class="input-mini" placeholder="95" value="<?php echo $config->yellowavgmhper?>">              
+                                <span class="add-on">%</span>
+                            </div>
+                            <div class="input-append">
+                                <input type="text" name="maxavgmhper" class="input-mini" placeholder="90" value="<?php echo $config->maxavgmhper?>">
+                                <span class="add-on">%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6">
+                    <h4>Pool</h4>
+                    <hr>
+                    <div class="control-group">
+                        <label class="control-label" for="yellowrejects">Rejected Shares</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" name="yellowrejects" class="input-mini" placeholder="1" value="<?php echo $config->yellowrejects?>">
+                                <span class="add-on">%</span>
+                            </div>
+                            <div class="input-append">
+                                <input type="text" name="maxrejects" class="input-mini" placeholder="2" value="<?php echo $config->maxrejects?>">
+                                <span class="add-on">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="yellowdisacrds">Discarded Shares</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" name="yellowdiscards" class="input-mini" placeholder="30" value="<?php echo $config->yellowdiscards?>">
+                                <span class="add-on">%</span>
+                            </div>
+                            <div class="input-append">
+                                <input type="text" name="maxdiscards" class="input-mini" placeholder="40" value="<?php echo $config->maxdiscards?>">
+                                <span class="add-on">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="yellowstales">Stale Shares</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" name="yellowstales" class="input-mini" placeholder="7" value="<?php echo $config->yellowstales?>">
+                                <span class="add-on">%</span>
+                            </div>
+                            <div class="input-append">
+                                <input type="text" name="maxstales" class="input-mini" placeholder="10" value="<?php echo $config->maxstales?>">
+                                <span class="add-on">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="yellowgetfails">Getwork Fails</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" name="yellowgetfails" class="input-mini" placeholder="1" value="<?php echo $config->yellowgetfails?>">
+                                <span class="add-on">%</span>
+                            </div>
+                            <div class="input-append">
+                                <input type="text" name="maxgetfails" class="input-mini" placeholder="2" value="<?php echo $config->maxgetfails?>">
+                                <span class="add-on">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="yellowremfails">REM Fails</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" name="yellowremfails" class="input-mini" placeholder="1" value="<?php echo $config->yellowremfails?>">
+                                <span class="add-on">%</span>
+                            </div>
+                            <div class="input-append">
+                                <input type="text" name="maxremfails" class="input-mini" placeholder="2" value="<?php echo $config->maxremfails?>">       
+                                <span class="add-on">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="yellowfan">Fan %</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" name="yellowfan" class="input-mini" placeholder="85" value="<?php echo $config->yellowfan?>">                
+                                <span class="add-on">%</span>
+                            </div>
+                            <div class="input-append">
+                                <input type="text" name="maxfan" class="input-mini" placeholder="90" value="<?php echo $config->maxfan?>">            
+                                <span class="add-on">%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" name="saveconf">Save Changes</button>
+            </div>
 		</form>
     </div>
     <div id="push"></div>
