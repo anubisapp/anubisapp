@@ -203,7 +203,7 @@ $config = $configq->fetch(PDO::FETCH_OBJ);
                 </div>
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary" name="saveconf">Save Changes</button>
+                <button type="submit" class="btn btn-primary pull-right" name="saveconf">Save Changes</button>
             </div>
 		</form>
     </div>

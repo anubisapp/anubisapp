@@ -11,14 +11,17 @@ body {
     height: 100%;
     margin: 0 auto -60px;
 }
-#push { 
-    height:80px; 
+#push {
+    height:80px;
 }
 #footer {
     height: 60px;
 }
 #footer {
     background-color: #f5f5f5;
+}
+.form-actions{
+    background: none;
 }
 @media (max-width: 767px) {
     #footer {
