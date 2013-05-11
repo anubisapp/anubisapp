@@ -57,6 +57,9 @@ $config = $configq->fetch(PDO::FETCH_OBJ);
                 <div class="left">
                     <h1>Configuration</h1>
                 </div>
+                <div class="right">
+                    <a href="/" class="btn pull-right">Back to Overview</a>
+                </div>
             </div>
         </div>
 

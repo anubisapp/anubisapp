@@ -101,7 +101,7 @@ else
 
                 <label><strong>Desired Hashrate</strong></label>
                 <input type="text" name="hash" value="<?php echo $hash ?>">
-                <span class="help-block">Set a desired hashare or leave it empty for maximum hashate.</span>
+                <span class="help-block">Set a desired hashare or leave it empty for maximum hashrate.</span>
 
                 <input type=hidden name="savehostid" value="<?php echo $id ?>">
                 <button type="submit" class="m_t10 btn btn-primary">Submit</button>
