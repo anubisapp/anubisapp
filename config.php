@@ -19,11 +19,11 @@ if (isset($_POST['saveconf'])) {
     }
 
     if (!$error) {
-        
+
         $updstring = substr($updstring,0,-2);
         $updstring = "UPDATE configuration SET ".$updstring."";
         $updcr = $dbh->query($updstring);
-        
+
         if (db_error()) {
             $message = '<strong>Error</strong> Could not save the configuration settings.';
             $type = 'alert-error';
@@ -49,13 +49,16 @@ $config = $configq->fetch(PDO::FETCH_OBJ);
 
     <div class="container">
         <div class="page-header">
-            <?php 
-                if (isset($_POST['saveconf'])) 
-                    echo alert($message, $type); 
+            <?php
+                if (isset($_POST['saveconf']))
+                    echo alert($message, $type);
             ?>
             <div class="row-fluid">
                 <div class="left">
                     <h1>Configuration</h1>
+                </div>
+                <div class="right">
+                    <a href="/" class="btn pull-right">Back to Overview</a>
                 </div>
             </div>
         </div>
@@ -96,11 +99,11 @@ $config = $configq->fetch(PDO::FETCH_OBJ);
                         <label class="control-label" for="yellowgessper">min. % of desired 5s MH/s</label>
                         <div class="controls">
                             <div class="input-append">
-                                <input type="text" name="yellowgessper" class="input-mini" placeholder="95" value="<?php echo $config->yellowgessper?>">              
+                                <input type="text" name="yellowgessper" class="input-mini" placeholder="95" value="<?php echo $config->yellowgessper?>">
                                 <span class="add-on">%</span>
                             </div>
                             <div class="input-append">
-                                <input type="text" name="maxgessper" class="input-mini" placeholder="90" value="<?php echo $config->maxgessper?>">             
+                                <input type="text" name="maxgessper" class="input-mini" placeholder="90" value="<?php echo $config->maxgessper?>">
                                 <span class="add-on">%</span>
                             </div>
                         </div>
@@ -109,7 +112,7 @@ $config = $configq->fetch(PDO::FETCH_OBJ);
                         <label class="control-label" for="yellowavgmhper">min. % of desired average MH/s</label>
                         <div class="controls">
                             <div class="input-append">
-                                <input type="text" name="yellowavgmhper" class="input-mini" placeholder="95" value="<?php echo $config->yellowavgmhper?>">              
+                                <input type="text" name="yellowavgmhper" class="input-mini" placeholder="95" value="<?php echo $config->yellowavgmhper?>">
                                 <span class="add-on">%</span>
                             </div>
                             <div class="input-append">
@@ -182,7 +185,7 @@ $config = $configq->fetch(PDO::FETCH_OBJ);
                                 <span class="add-on">%</span>
                             </div>
                             <div class="input-append">
-                                <input type="text" name="maxremfails" class="input-mini" placeholder="2" value="<?php echo $config->maxremfails?>">       
+                                <input type="text" name="maxremfails" class="input-mini" placeholder="2" value="<?php echo $config->maxremfails?>">
                                 <span class="add-on">%</span>
                             </div>
                         </div>
@@ -191,11 +194,11 @@ $config = $configq->fetch(PDO::FETCH_OBJ);
                         <label class="control-label" for="yellowfan">Fan %</label>
                         <div class="controls">
                             <div class="input-append">
-                                <input type="text" name="yellowfan" class="input-mini" placeholder="85" value="<?php echo $config->yellowfan?>">                
+                                <input type="text" name="yellowfan" class="input-mini" placeholder="85" value="<?php echo $config->yellowfan?>">
                                 <span class="add-on">%</span>
                             </div>
                             <div class="input-append">
-                                <input type="text" name="maxfan" class="input-mini" placeholder="90" value="<?php echo $config->maxfan?>">            
+                                <input type="text" name="maxfan" class="input-mini" placeholder="90" value="<?php echo $config->maxfan?>">
                                 <span class="add-on">%</span>
                             </div>
                         </div>
