@@ -19,10 +19,10 @@ if (isset($_POST['savehostid']) && !isset($_POST['delete']))
 {
   $id = 0 + $_POST['savehostid'];
   $id_quote = $dbh->quote($id);
-  $newname = $dbh->quote($_POST['macname']);
-  $address = $dbh->quote($_POST['ipaddress']);
+  $newname = $dbh->quote($_POST['name']);
+  $address = $dbh->quote($_POST['address']);
   $port = $dbh->quote($_POST['port']);
-  $mhash = $dbh->quote($_POST['mhash']);
+  $mhash = $dbh->quote($_POST['mash_desired']);
 
   if ($newname && $newname !== "" && $address && $address !== "")
   {
