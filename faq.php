@@ -29,7 +29,7 @@
         <p>To enable this, you need to ensure you have given your --api-allow or --api-network the W: access group, so that it has full API access. Alternatively you can create your own access group.</p>
         <p>Example:</p>
         <ul class="unstyled">
-            <li>api-listen" : true,</li>
+            <li>"api-listen" : true,</li>
             <li>"api-allow" : "W:127.0.0.1,192.168.0/24", </li>
             <li>"api-port" : "4028",</li>
         </ul>
