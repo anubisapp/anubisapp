@@ -24,6 +24,17 @@
         <p>All you need is a PHP/MySQL enabled host. Usually run by a <a href="http://www.wampserver.com/en/" target="_blank">WAMP</a> or <a href="http://wiki.debian.org/LaMp" target="_blank">LAMP</a> software stack. This host has to be able to reach your miners by network i.e. you should be able to ping your miners from the PHP/MySQL enabled host. Simple copy all the AnubisApp files into a directory of your choice into your webserver root and call it there like: http://my.host.com/anubis i.e.</p>
         <p>Please follow the guidelines in the README for further instructions. If you have any issues during installation then please head on over to our <a href="https://github.com/anubisapp/anubisapp/issues" target="_blank">AnubisApp issues</a> section on Github.</p>
 
+        <h4>How do I restart cgminer etc?</h4>
+        <p>AnubisApp allows you to make full use of the CGMiner API, such as changing pool priority, adding pools, removing pools, restarting specific GPUs etc.</p>
+        <p>To enable this, you need to ensure you have given your --api-allow or --api-network the W: access group, so that it has full API access. Alternatively you can create your own access group.</p>
+        <p>Example:</p>
+        <ul class="unstyled">
+            <li>api-listen" : true,</li>
+            <li>"api-allow" : "W:127.0.0.1,192.168.0/24", </li>
+            <li>"api-port" : "4028",</li>
+        </ul>
+        <p>The configuration above (assumed to be in cgminer.conf), will allow the PI to listen with full priviledged access on 127.0.0.1, and 192.168.0.* on port 4028.</p>
+
         <h4>Something is wrong/does not work as expected.</h4>
         <p>Since we are in a very early development stage of AnubisApp there will surely be bugs. If you have found a bug or have any suggestions please head on over to our <a href="https://github.com/anubisapp/anubisapp/issues" target="_blank">AnubisApp issues</a> section and submit an issue with a detailed bug report or your suggestion.</p>
 
