@@ -81,7 +81,7 @@ else
                     <h1>Add Host</h1>
                 </div>
                 <div class="right">
-                    <a href="/" class="btn pull-right">Back to Overview</a>
+                    <a href="index.php" class="btn pull-right">Back to Overview</a>
                 </div>
             </div>
         </div>
