@@ -53,6 +53,9 @@ $socket_timeout = 3;
 This is the timeout in whole seconds for a connection to wait for a response
 before continuing.
 
+*NOTE* If you are using WAMP or a similar stack, please ensure php_sockets is
+enabled in the configuration, otherwise you won't be able to receive any data!
+
 HOST DETAIL:
 From the main page, clicking a host name will take you to a page displaying
 the selected host summary, pools and devices. Individual elements will be
