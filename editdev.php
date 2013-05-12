@@ -131,15 +131,6 @@ if($host_data = get_host_data($id))
 ?>
 <?php require('head.inc.php'); ?>
 <script type="text/javascript">
-
-ddsmoothmenu.init({
-    mainmenuid: "templatemo_menu", //menu DIV id
-    orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
-    classname: 'ddsmoothmenu', //class added to menu's outer DIV
-    //customtheme: ["#1c5a80", "#18374a"],
-    contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
-})
-
 $(function()
 {
   $( "#gpuclk_slider" ).slider({
@@ -233,14 +224,14 @@ $(function()
 
         if ($host_data)
         {
-          echo "<table class='acuity' summary='HostSummary' align='center'>";
+          echo "<table class='table table-bordered table-striped' summary='HostSummary' align='center'>";
           echo create_host_header();
           echo get_host_summary($host_data);
           echo "</table>";
           if ($host_alive)
           {
             echo "<form name='control' action='editdev.php?id=".$id."&dev=".$dev."&type=".$type."' method='post'>";
-            echo "<table class='acuity' summary='DevsSummary' align='center'>";
+            echo "<table class='table table-bordered table-striped' summary='DevsSummary' align='center'>";
             echo create_devs_header();
             echo process_dev_disp($gpu_data_array, $privileged);
 
@@ -269,7 +260,7 @@ $(function()
           {
         ?>
             <form name='apply' action='editdev.php?id=<?php echo $id?>&dev=<?php echo $dev?>&type=<?php echo $type?>' method='post'>
-                <table class="acuity" summary='DevsControl' align='center'>
+                <table class="table table-bordered table-striped" summary='DevsControl' align='center'>
                 <thead>
                     <tr>
                       <th colspan='3' scope='col' class='rounded-q1'> Edit settings below for <?php echo $type?> <?php echo $dev?> on <?php echo $host_data['name']?></th>
