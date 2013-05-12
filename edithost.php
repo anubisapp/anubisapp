@@ -183,7 +183,7 @@ if($host_data = get_host_data($id))
 
           if ($host_alive)
           {
-            echo "<form name=pool action='edithost.php?id=".$id."' method='post'>";
+            echo "<form name='pool' class='form-inline' action='edithost.php?id=".$id."' method='post'>";
             echo "<table id=\"devsum\" class='table table-bordered table-striped' summary='DevsSummary' align='center'>";
             echo create_devs_header();
             echo process_devs_disp($host_data, FALSE);
@@ -217,17 +217,17 @@ if($host_data = get_host_data($id))
               <thead>
                 <tr>
                   <th colspan="12">
-                    Pool URL: <input type="text" name="url">&nbsp;
-                    Username: <input type="text" name="user">&nbsp;
-                    Password: <input type="text" name="pass">&nbsp;&nbsp;
-                    <input type="submit" value="Add Pool" name="addpool">
+                    <label for="url">Pool URL:</label><input type="text" name="url">
+                    <label for="user">Username:</label><input type="text" name="user">
+                    <label for="pass">Password:</label><input type="text" name="pass">
+                    <button type="submit" class="btn" name="addpool">Add Pool</button>
                     </th>
                   </tr>
                   <tr>
                     <th colspan="12">
                     Configuration file path (blank for default):
                     <input type="text" name="confpath" value="<?php echo $host_data['conf_file_path']?>">
-                    <input type="submit" value="Save Configuration" name="saveconf">
+                    <input type="submit" class="btn" value="Save Configuration" name="saveconf">
                   </th>
                 </tr>
         <?php
@@ -255,23 +255,16 @@ if($host_data = get_host_data($id))
             if ((version_compare($API_version, 1.7, '>=')) && $privileged)
             {
             ?>
-            <table class='acuity' summary='cgminerreset' align='center'>
-                <tr>
-                    <th colspan="2"  scope="col" class="rounded-company">
-                        To restart or quit CGminer, click the checkbox, then press the button.
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        <input type="checkbox" value="Reset" name="restartchk">&nbsp;
-                        <input type="submit" value="Reset" name="restartbut">&nbsp;
-                    </th>
-                    <th>
-                        <input type="checkbox" value="Quit" name="quitchk">&nbsp;
-                        <input type="submit" value="Quit" name="quitbut">
-                    </th>
-                </tr>
-            </table>
+            <div class="row-fluid">
+                <p class="text-center">To restart or quit CGminer, click the checkbox, then press the button.</p>
+                <p class="text-center">
+                    <input type="checkbox" class="btn" value="Reset" name="restartchk">
+                    <input type="submit" class="btn" value="Reset" name="restartbut">
+                    <input type="checkbox" class="btn" value="Quit" name="quitchk">
+                    <input type="submit" class="btn" value="Quit" name="quitbut">
+                </p>
+            </div>
+            <hr>
             <?php
             }
             echo "</form>";
