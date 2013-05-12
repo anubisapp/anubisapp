@@ -282,7 +282,7 @@ if($host_data = get_host_data($id))
             <label for="name">Name</label> <input type="text" name="name" value="<?php echo $host_data['name']?>">
             <label for="hostname">IP / Hostname</label> <input type="text" name="address" value="<?php echo $host_data['address']?>">
             <label for="port">Port</label> <input type="text" name="port" value="<?php echo $host_data['port']?>">
-            <label for="speed">MH/s desired</label> <input type="text" name="speed" value="<?php echo $host_data['mhash_desired']?>">
+            <label for="speed">MH/s desired</label> <input type="text" name="mash_desired" value="<?php echo $host_data['mhash_desired']?>">
             <input type=hidden name="savehostid" value="<?php echo $id?>">
             <div style="margin-top:10px;" class="pull-right">
                 <button type="submit" class="btn btn-primary" name="save">Save</button>
