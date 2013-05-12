@@ -698,13 +698,13 @@ function process_dev_disp($gpu_data_array, $edit=false)
         {
           $button =
             "<input type='submit' class='btn btn-small' value='Stop' name='stop'".$button_disable."><br>
-             <input type='submit' class='btn btn-smal' value='Restart' name='restart' ".$button_disable.">";
+             <input type='submit' class='btn btn-small' value='Restart' name='restart' ".$button_disable.">";
         }
         else
         {
           $button =
-            "<input type='submit' class='btn btn-smal' value='Start' name='start'".$button_disable."><br>
-             <input type='submit' class='btn btn-smal' value='Restart' name='restart' disabled='disabled'>";
+            "<input type='submit' class='btn btn-small' value='Start' name='start'".$button_disable."><br>
+             <input type='submit' class='btn btn-small' value='Restart' name='restart' disabled='disabled'>";
         }
       }
 
