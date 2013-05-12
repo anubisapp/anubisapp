@@ -22,10 +22,12 @@
 
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="assets/css/anubisapp.css" rel="stylesheet">
+    <link href="assets/css/simple-slider.css" rel="stylesheet">
     <!--[if IE]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="assets/js/simple-slider.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>

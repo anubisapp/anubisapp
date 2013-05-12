@@ -130,81 +130,6 @@ if($host_data = get_host_data($id))
 
 ?>
 <?php require('head.inc.php'); ?>
-<script type="text/javascript">
-$(function()
-{
-  $( "#gpuclk_slider" ).slider({
-    value: <?php echo $gpu_data_array['GPU Clock']?>,
-    min: 100,
-    max: 1500,
-    step: 5,
-    slide: function( event, ui )
-    {
-      $( "#gpuclk_dro" ).val(ui.value );
-      $( "#gpuclk_chk" ).each(function(){ this.checked = true; });
-    },
-  });
-  $( "#gpuclk_dro" ).val($( "#gpuclk_slider" ).slider( "value" ) );
-
-  $( "#memclk_slider" ).slider({
-    value: <?php echo $gpu_data_array['Memory Clock']?>,
-    min: 100,
-    max: 1500,
-    step: 5,
-    slide: function( event, ui )
-    {
-      $( "#memclk_dro" ).val(ui.value );
-      $( "#memclk_chk" ).each(function(){ this.checked = true; });
-    },
-  });
-  $( "#memclk_dro" ).val($( "#memclk_slider" ).slider( "value" ) );
-
-  $( "#gpuvolt_slider" ).slider({
-    value: <?php echo $gpu_data_array['GPU Voltage']?>,
-    min: 0.5,
-    max: 1.5,
-    step: 0.01,
-    slide: function( event, ui )
-    {
-      $( "#gpuvolt_dro" ).val(ui.value );
-      $( "#gpuvolt_chk" ).each(function(){ this.checked = true; });
-    },
-  });
-  $( "#gpuvolt_dro" ).val($( "#gpuvolt_slider" ).slider( "value" ) );
-
-  $( "#gpufan_slider" ).slider({
-    value: <?php echo $gpu_data_array['Fan Percent']?>,
-    min: 0,
-    max: 100,
-    step: 1,
-    slide: function( event, ui )
-    {
-      $( "#gpufan_dro" ).val(ui.value );
-      $( "#gpufan_chk" ).each(function(){ this.checked = true; });
-    },
-  });
-  $( "#gpufan_dro" ).val($( "#gpufan_slider" ).slider( "value" ) );
-
-  <?php
-  $intensity = ($gpu_data_array['Intensity'] == 'D') ? -1 : $gpu_data_array['Intensity'];
-  ?>
-
-  $( "#intensity_slider" ).slider({
-    value: <?php echo $intensity?>,
-    min: -1,
-    max: 15,
-    step: 1,
-    slide: function( event, ui )
-    {
-      $( "#intensity_dro" ).val(ui.value );
-      $( "#intensity_chk" ).each(function(){ this.checked = true; });
-      if ($( "#intensity_dro" ).val() == -1){$( "#intensity_dro" ).val("D");}
-    }
-  });
-  $( "#intensity_dro" ).val($( "#intensity_slider" ).slider( "value" ) );
-  if ($( "#intensity_dro" ).val() == -1){$( "#intensity_dro" ).val("D");}
-});
-    </script>
 
     <div class="container">
         <div class="page-header">
@@ -224,14 +149,14 @@ $(function()
 
         if ($host_data)
         {
-          echo "<table class='table table-bordered table-striped' summary='HostSummary' align='center'>";
+          echo "<table class='table table-striped table-bordered' summary='HostSummary' align='center'>";
           echo create_host_header();
           echo get_host_summary($host_data);
           echo "</table>";
           if ($host_alive)
           {
             echo "<form name='control' action='editdev.php?id=".$id."&dev=".$dev."&type=".$type."' method='post'>";
-            echo "<table class='table table-bordered table-striped' summary='DevsSummary' align='center'>";
+            echo "<table class='table table-striped table-bordered' summary='DevsSummary' align='center'>";
             echo create_devs_header();
             echo process_dev_disp($gpu_data_array, $privileged);
 
@@ -259,68 +184,79 @@ $(function()
           if ($privileged && ($type == 'GPU'))
           {
         ?>
-            <form name='apply' action='editdev.php?id=<?php echo $id?>&dev=<?php echo $dev?>&type=<?php echo $type?>' method='post'>
-                <table class="table table-bordered table-striped" summary='DevsControl' align='center'>
+            <form name='apply' class="form-inline" action='editdev.php?id=<?php echo $id?>&dev=<?php echo $dev?>&type=<?php echo $type?>' method='post'>
+                <table class="table table-striped table-bordered" summary='DevsControl' align='center'>
                 <thead>
                     <tr>
-                      <th colspan='3' scope='col' class='rounded-q1'> Edit settings below for <?php echo $type?> <?php echo $dev?> on <?php echo $host_data['name']?></th>
+                      <th colspan='6' scope='col'> Edit settings below for <?php echo $type?> <?php echo $dev?> on <?php echo $host_data['name']?></th>
                     </tr>
                     <tr>
-                        <th width='20' scope='col' class='rounded-q1'>Set</th>
-                        <th scope='col' class='rounded-q1'>Min</th>
-                        <th scope='col' class='rounded-q1'>Setting</th>
-                        <th scope='col' class='rounded-q1'>Max</th>
+                        <th width="10" scope='col'>Set</th>
+                        <th colspan="3" scope='col'>Setting</th>
+                        <th width="20" scope='col'>Min</th>
+                        <th width="20" scope='col'>Max</th>
                     </tr>
                 </thead>
                 <tr>
-                  <td width='20' rowspan="2"><input type="checkbox" name="gpuclk_chk"  id="gpuclk_chk" value="1"/></td>
-                  <td width='20'>100</td>
-                  <td align='center'>Set GPU Clock Speed: <input type="text" name="gpuclk_dro"  id="gpuclk_dro" style="border:0; font-weight:bold;" size="3" /> MHz</td>
-                  <td width='20'>1500</td>
+                  <td><input type="checkbox" name="gpuclk_chk"  id="gpuclk_chk" value="1"/></td>
+                  <td><label for="gpuclk_dro">Set GPU Clock Speed:</label></td>
+                  <td>
+                      <div class="input-append">
+                          <input type="text" id="gpuclk_dro" data-field="true" name="gpuclk_dro" id="gpuclk_dro" value="<?php $gpu_data_array['GPU Clock']?>">
+                          <span class="add-on">MHz</span>
+                      </div>
+                  <td><input type="text" id="gpuclk_dro_slider" data-slider="true" data-for="gpuclk_dro" data-slider-step="1" data-slider-range="300,1900" value="<?php $gpu_data_array['GPU Clock']?>"></td>
+                  <td>300</td>
+                  <td>1900</td>
                 </tr>
                 <tr>
-                  <td colspan='3'><div id="gpuclk_slider"></div></td>
+                  <td><input type="checkbox" name="memclk_chk"  id="memclk_chk" value="1"/></td>
+                  <td><label for="memclk_dro">Set Memory Clock Speed:</label></td>
+                  <td>
+                      <div class="input-append">
+                          <input type="text" id="memclk_dro" data-field="true" name="memclk_dro" id="memclk_dro" value="<?php $gpu_data_array['Memory Clock']?>">
+                          <span class="add-on">MHz</span>
+                      </div>
+                  <td><input type="text" id="memclk_dro_slider" data-slider="true" data-for="memclk_dro" data-slider-step="1" data-slider-range="300,1900" value="<?php $gpu_data_array['Memory Clock']?>"></td>
+                  <td>300</td>
+                  <td>1900</td>
                 </tr>
                 <tr>
-                  <td width='20' rowspan="2"><input type="checkbox" name="memclk_chk"  id="memclk_chk" value="1"/></td>
-                  <td>100</td>
-                  <td align='center'>Set Memory Clock Speed: <input type="text" name="memclk_dro" id="memclk_dro" style="border:0; font-weight:bold;" size="3" /> MHz</td>
-                  <td>1500</td>
-                </tr>
-                <tr>
-                  <td colspan='3'><div id="memclk_slider"></div></td>
-                </tr>
-                <tr>
-                  <td width='20' rowspan="2"><input type="checkbox" name="gpuvolt_chk"  id="gpuvolt_chk" value="1"/></td>
+                  <td><input type="checkbox" name="gpuvolt_chk"  id="gpuvolt_chk" value="1"/></td>
+                  <td><label for="gpuvolt_dro">Set GPU Voltage:</label></td>
+                  <td>
+                      <div class="input-append">
+                          <input type="text" id="gpuvolt_dro" data-field="true" name="gpuvolt_dro" id="gpuvolt_dro" value="<?php echo $gpu_data_array['GPU Voltage']?>">
+                          <span class="add-on">v</span>
+                      </div>
+                  <td><input type="text" id="gpuvolt_dro_slider" data-slider="true" data-for="gpuvolt_dro" data-slider-range="0.5,1.5" data-slider-step="0.01" value="<?php echo $gpu_data_array['GPU Voltage']?>"></td>
                   <td>0.50</td>
-                  <td align='center'>Set GPU Voltage: <input type="text" name="gpuvolt_dro" id="gpuvolt_dro" style="border:0;  font-weight:bold;" size="3" /> V</td>
                   <td>1.50</td>
                 </tr>
                 <tr>
-                  <td colspan='3'><div id="gpuvolt_slider"></div></td>
-                </tr>
-                <tr>
-                  <td width='20' rowspan="2"><input type="checkbox" name="gpufan_chk"  id="gpufan_chk" value="1"/></td>
+                  <td><input type="checkbox" name="gpufan_chk"  id="gpufan_chk" value="1"/></td>
+                  <td><label for="gpufan_dro">Set Fan Speed:</label></td>
+                  <td >
+                      <div class="input-append">
+                          <input type="text" id="gpufan_dro" data-field="true" name="gpufan_dro" id="gpufan_dro" value="<?php echo $gpu_data_array['Fan Percent']?>">
+                          <span class="add-on">%</span>
+                      </div>
+                  <td><input type="text" id="gpufan_dro_slider" data-slider="true" data-for="gpufan_dro" data-slider-step="1" data-slider-range="0,100" value="<?php echo $gpu_data_array['Fan Percent']?>"></td>
                   <td>0</td>
-                  <td align='center'>Set Fan Speed: <input type="text" name="gpufan_dro" id="gpufan_dro" style="border:0; font-weight:bold;" size="3" /> %</td>
                   <td>100</td>
                 </tr>
                 <tr>
-                  <td colspan='3'><div id="gpufan_slider"></div></td>
-                </tr>
-                <tr>
-                  <td width='20' rowspan="2"><input type="checkbox" name="intensity_chk"  id="intensity_chk" value="1"/></td>
-                  <td>D</td>
-                  <td align='center'>Set Intensity: <input type="text" name="intensity_dro" id="intensity_dro" style="border:0; font-weight:bold;" size="3" /></td>
-                  <td>15</td>
-                </tr>
-                <tr>
-                  <td colspan='3'><div id="intensity_slider"></div></td>
+                  <td><input type="checkbox" name="intensity_chk"  id="intensity_chk" value="1"/></td>
+                  <td><label for="intensity_dro">Set Intensity:</label></td>
+                  <td><input type="text" id="intensity_dro" name="intensity_dro" id="intensity_dro" value="<?php echo $intensity?>"></td>
+                  <td><input type="text" id="intensity_dro_slider" data-slider="true" data-for="intensity_dro" data-slider-range="0,20" data-slider-step="1" data-slider-snap="true" value="<?php echo $intensity?>"></td>
+                  <td>0</td>
+                  <td>20</td>
                 </tr>
                 <thead>
                   <tr>
-                    <th colspan='4' scope='col' class='rounded-q1'>
-                        <input type='submit' value='Apply Settings' name='apply'><br>
+                    <th colspan='6' scope='col''>
+                        <button class='btn pull-right' type='submit'name='apply'>Apply Settings</button>
                     </th>
                   </tr>
                 <?php
@@ -361,6 +297,19 @@ $(function()
     <div id="push"></div>
 </div>
 
+<script>
+    $(function() {
+        $('[data-slider]').bind("slider:ready slider:changed", function (event, data) {
+            var input = "#" + $(this).attr("data-for");
+            var val = ($(this).attr("id") == "gpuvolt_dro" ? data.value.toFixed(3) : data.value);
+            $(input).val(val);
+        });
+        $('[data-field]').on('input', function() {
+            var input = "#" + $(this).attr("id") + "_slider";
+            $(input).simpleSlider("setValue", $(this).val());
+        });
+    })
+</script>
 <?php include("footer.inc.php"); ?>
 
 </body>
