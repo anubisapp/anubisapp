@@ -1,4 +1,4 @@
-<?
+<?php
 # Simple HTTP authentication
 # Must run before any content has been echoed to the screen.
 $user="admin";
