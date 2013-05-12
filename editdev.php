@@ -249,7 +249,7 @@ if($host_data = get_host_data($id))
                   <td><input type="checkbox" name="intensity_chk"  id="intensity_chk" value="1"/></td>
                   <td><label for="intensity_dro">Set Intensity:</label></td>
                   <td><input type="text" id="intensity_dro" name="intensity_dro" id="intensity_dro" value="<?php echo $gpu_data_array['Intensity']?>"></td>
-                  <td><input type="text" id="intensity_dro_slider" data-slider="true" data-for="intensity_dro" data-slider-range="0,20" data-slider-step="1" data-slider-snap="true" value="<?php $gpu_data_array['Intensity']?>"></td>
+                  <td><input type="text" id="intensity_dro_slider" data-slider="true" data-for="intensity_dro" data-slider-range="0,20" data-slider-step="1" data-slider-snap="true" value="<?php echo $gpu_data_array['Intensity']?>"></td>
                   <td>0</td>
                   <td>20</td>
                 </tr>
