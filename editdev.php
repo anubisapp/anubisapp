@@ -202,10 +202,10 @@ if($host_data = get_host_data($id))
                   <td><label for="gpuclk_dro">Set GPU Clock Speed:</label></td>
                   <td>
                       <div class="input-append">
-                          <input type="text" id="gpuclk_dro" data-field="true" name="gpuclk_dro" id="gpuclk_dro" value="<?php $gpu_data_array['GPU Clock']?>">
+                          <input type="text" id="gpuclk_dro" data-field="true" name="gpuclk_dro" id="gpuclk_dro" value="<?php echo $gpu_data_array['GPU Clock']?>">
                           <span class="add-on">MHz</span>
                       </div>
-                  <td><input type="text" id="gpuclk_dro_slider" data-slider="true" data-for="gpuclk_dro" data-slider-step="1" data-slider-range="300,1900" value="<?php $gpu_data_array['GPU Clock']?>"></td>
+                  <td><input type="text" id="gpuclk_dro_slider" data-slider="true" data-for="gpuclk_dro" data-slider-step="1" data-slider-range="300,1900" value="<?php echo $gpu_data_array['GPU Clock']?>"></td>
                   <td>300</td>
                   <td>1900</td>
                 </tr>
@@ -214,10 +214,10 @@ if($host_data = get_host_data($id))
                   <td><label for="memclk_dro">Set Memory Clock Speed:</label></td>
                   <td>
                       <div class="input-append">
-                          <input type="text" id="memclk_dro" data-field="true" name="memclk_dro" id="memclk_dro" value="<?php $gpu_data_array['Memory Clock']?>">
+                          <input type="text" id="memclk_dro" data-field="true" name="memclk_dro" id="memclk_dro" value="<?php echo $gpu_data_array['Memory Clock']?>">
                           <span class="add-on">MHz</span>
                       </div>
-                  <td><input type="text" id="memclk_dro_slider" data-slider="true" data-for="memclk_dro" data-slider-step="1" data-slider-range="300,1900" value="<?php $gpu_data_array['Memory Clock']?>"></td>
+                  <td><input type="text" id="memclk_dro_slider" data-slider="true" data-for="memclk_dro" data-slider-step="1" data-slider-range="300,1900" value="<?php echo $gpu_data_array['Memory Clock']?>"></td>
                   <td>300</td>
                   <td>1900</td>
                 </tr>
@@ -248,8 +248,8 @@ if($host_data = get_host_data($id))
                 <tr>
                   <td><input type="checkbox" name="intensity_chk"  id="intensity_chk" value="1"/></td>
                   <td><label for="intensity_dro">Set Intensity:</label></td>
-                  <td><input type="text" id="intensity_dro" name="intensity_dro" id="intensity_dro" value="<?php echo $intensity?>"></td>
-                  <td><input type="text" id="intensity_dro_slider" data-slider="true" data-for="intensity_dro" data-slider-range="0,20" data-slider-step="1" data-slider-snap="true" value="<?php echo $intensity?>"></td>
+                  <td><input type="text" id="intensity_dro" name="intensity_dro" id="intensity_dro" value="<?php echo $gpu_data_array['Intensity']?>"></td>
+                  <td><input type="text" id="intensity_dro_slider" data-slider="true" data-for="intensity_dro" data-slider-range="0,20" data-slider-step="1" data-slider-snap="true" value="<?php $gpu_data_array['Intensity']?>"></td>
                   <td>0</td>
                   <td>20</td>
                 </tr>
