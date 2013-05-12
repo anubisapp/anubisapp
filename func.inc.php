@@ -481,7 +481,7 @@ function process_host_disp($desmhash, $summary_data_array, $dev_data_array)
 
     if (isset($accepted) && $accepted !== 0)
     {
-      $efficency = number_format(100 / $getworks * $accepted, $sigdigs, ".", "") . " %";
+      $efficency = number_format(100 / ($accepted + $rejected + $discarded + $stale + $getfail + $remfail) * $accepted, $sigdigs, ".", "") . " %";
       $rejects = number_format(100 / ($accepted + $rejected) * $rejected, $sigdigs, ".", "") . " %";
       $discards = number_format(100 / $accepted * $discarded, $sigdigs, ".", "") . " %";
       $stales = number_format(100 / $accepted * $stale, $sigdigs, ".", "") . " %";
