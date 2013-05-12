@@ -1,4 +1,4 @@
-<?
+<?php
 require("auth.inc.php");
 require("config.inc.php");
 require("func.inc.php");
