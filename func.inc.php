@@ -697,22 +697,21 @@ function process_dev_disp($gpu_data_array, $edit=false)
         if(($gpu_data_array['Enabled'] == "Y"))
         {
           $button =
-            "<input type='submit' value='Stop' name='stop'".$button_disable."><br>
-             <input type='submit' value='Restart' name='restart' ".$button_disable.">";
+            "<input type='submit' class='btn' value='Stop' name='stop'".$button_disable."><br>
+             <input type='submit' class='btn' value='Restart' name='restart' ".$button_disable.">";
         }
         else
         {
           $button =
-            "<input type='submit' value='Start' name='start'".$button_disable."><br>
-             <input type='submit' value='Restart' name='restart' disabled='disabled'>";
+            "<input type='submit' class='btn' value='Start' name='start'".$button_disable."><br>
+             <input type='submit' class='btn' value='Restart' name='restart' disabled='disabled'>";
         }
       }
 
       $DEV_cell =
-      "<table border=0><tr>
-        <td><a href='editdev.php?id=".$id."&dev=".$gpu_data_array['GPU']."&type=GPU'><img src=\"images/edit.png\" border=0></a></td>
-        <td><a href='editdev.php?id=".$id."&dev=".$gpu_data_array['GPU']."&type=GPU'>GPU" .$gpu_data_array['GPU']."</a></td></td>
-      </tr></table>";
+      "<a href='editdev.php?id=".$id."&dev=".$gpu_data_array['GPU']."&type=GPU'>
+      <i class='icon icon-edit'></i> GPU" .$gpu_data_array['GPU']."
+      </a>";
     }
     else
     {
@@ -734,9 +733,9 @@ function process_dev_disp($gpu_data_array, $edit=false)
     if ($privileged)
     {
       if(($gpu_data_array['Enabled'] == "Y"))
-        $button = "<button type='submit' name='stoppga' value='".$gpu_data_array['PGA'].$button_disable."'>Stop</button>";
+        $button = "<button type='submit' class='btn' name='stoppga' value='".$gpu_data_array['PGA'].$button_disable."'>Stop</button>";
       else
-        $button = "<button type='submit' name='startpga' value='".$gpu_data_array['PGA'].$button_disable."'>Start</button>";
+        $button = "<button type='submit' class='btn' name='startpga' value='".$gpu_data_array['PGA'].$button_disable."'>Start</button>";
     }
 
     $DEV_cell = $gpu_data_array['Name'] . $gpu_data_array['PGA'];
@@ -922,17 +921,17 @@ function process_pool_disp($pool_data_array, $edit=false)
   if($edit)
   {
     $disable_button = ($pool_data_array['Priority'] == '0') ? " disabled='disabled'" : "";
-    $top_button = " <button type='submit' name='toppool' value='".$pool_data_array['POOL']. "' " . $disable_button.">Top</button>";
+    $top_button = " <button type='submit' class='btn' name='toppool' value='".$pool_data_array['POOL']. "' " . $disable_button.">Top</button>";
 
     if($pool_data_array['Status'] == "Alive")
-      $start_stop_button = " <button type='submit' name='stoppool' value='".$pool_data_array['POOL']."'>Stop</button>";
+      $start_stop_button = " <button type='submit' class='btn' name='stoppool' value='".$pool_data_array['POOL']."'>Stop</button>";
     else if ($pool_data_array['Status'] == "Disabled")
-      $start_stop_button = " <button type='submit' name='startpool' value='".$pool_data_array['POOL']."'>Start</button>";
+      $start_stop_button = " <button type='submit' class='btn' name='startpool' value='".$pool_data_array['POOL']."'>Start</button>";
     else
-      $start_stop_button = " <button disabled='disabled'>Start</button>";
+      $start_stop_button = " <button class='btn btn-disabled' disabled='disabled>Start</button>";
 
     if (version_compare($API_version, 1.7, '>='))
-      $start_stop_button .= "<button type='submit' name='rempool' value='".$pool_data_array['POOL']."'>Delete</button>";
+      $start_stop_button .= "<button type='submit' class='btn' name='rempool' value='".$pool_data_array['POOL']."'>Delete</button>";
   }
 
   /*Set in-use colour */
@@ -1159,7 +1158,7 @@ function process_devdetails_disp($dev_data_array)
   $button = '';
 
   if ($dev_data_array['Name'] == 'BFL')
-  	$button = " &nbsp;<button type='submit' name='flashpga' value='".$dev_data_array['ID']."'>Blink</button>";
+  	$button = " &nbsp;<button type='submit' class='btn' name='flashpga' value='".$dev_data_array['ID']."'>Blink</button>";
 
   $row = "<tr>
   <td>".$dev_data_array['Name'] . $dev_data_array['ID'] . $button ."</td>
