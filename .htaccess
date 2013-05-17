@@ -1,0 +1,6 @@
+Options +FollowSymLinks
+ 
+RewriteEngine On
+RewriteRule ^([a-zA-Z]+)/([a-zA-Z]+)/([0-9]+)/([a-zA-Z]+)/([0-9]+)$ $1.php?$2=$3&$4=$5
+RewriteRule ^([a-zA-Z]+)/([a-zA-Z]+)/([0-9]+)$ $1.php?$2=$3
+RewriteRule ^([a-zA-Z]+)$ $1.php
