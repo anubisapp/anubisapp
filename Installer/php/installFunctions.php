@@ -13,13 +13,17 @@ require("DB.php");
     echo json_encode($retval);
 }
 catch(Exception $e) {
-    echo json_encode($e);
+    echo json_encode($e->getMessage());
 }
 
 function CreateTables()
 {
-
-    $DB = new DB($_GET["username"], $_GET["password"], $_GET["database"], "mysql", $_GET["host"]);
+    $username = $_GET["username"];
+    $password = $_GET["password"];
+    $database  = $_GET["database"];
+    $host = $_GET["host"];
+    
+    $DB = new DB($username, $password, $database, "mysql", $host);
     $sql = "
             CREATE TABLE IF NOT EXISTS `configuration` (
             `updatetime` int(11) NOT NULL,
@@ -61,6 +65,9 @@ function CreateTables()
 
     if(checkIfTableExists("hosts") == 0) throw new Exception("Failed to create table hosts");
     
+    //If we have got this far, we can assume we are safe to write the values to the config file?
+    writeToConfig($host, $username, $password, $database);
+    
     return "Tables Created";
 }
 
@@ -90,7 +97,31 @@ function checkIfTableExists($table)
     }
 }
 
-function writeToConfig($host, $username, $pass, $database)
-{
-    
+function writeToConfig($host, $username, $password, $database)
+{   
+    try 
+    {
+        $file = "..\..\config.inc.php";
+        $content = file_get_contents($file);
+        
+        $content = preg_replace('/\$dbdatabase = \"(.*?)\"/',
+                                '\$dbdatabase = "'.$database.'"',
+                                $content);      
+        $content = preg_replace('/\$dbusername = \"(.*?)\"/',
+                                '\$dbusername = "'.$username.'"',
+                                $content);    
+        $content = preg_replace('/\$dbpassword = \"(.*?)\"/',
+                                '\$dbpassword = "'.$password.'"',
+                                $content);        
+        $content = preg_replace('/\$dbhost = \"(.*?)\"/',
+                                '\$dbhost = "'.$host.'"',
+                                $content); 
+
+        file_put_contents($file, $content);
+        
+    }
+    catch(Exception $e)
+    {
+        throw new Exception("Failed to write values to config.inc.php");  
+    }
 }

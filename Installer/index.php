@@ -10,6 +10,9 @@
         .hidden {
             display: none;   
         }   
+        .navbuttons {
+            margin: 3px 0px 3px 0px;
+        }
         </style>
     </head>
     
@@ -24,7 +27,18 @@
             </div>
             
             <div id="panel-1" class="hidden">
+                <p>
+                    Welcome to the anubisapp installer.
+                </p>
+                <p>
+                    To begin installing or upgrading anubisapp click next.
+                </p>
+            </div>
+            
+            <div id="panel-2" class="hidden">
                 <h2>Database details</h2>
+                    <p>Please enter the details so we can connect to your database</p>
+                    <p>If you have not changed your database login details then the default values should work.</p>
                     <div id="panel">
                         <form>
                             <fieldset>
@@ -41,7 +55,7 @@
                     </div>
             </div>
             
-            <div id="panel-2" class="hidden">    
+            <div id="panel-3" class="hidden">    
                 <p id="installTxt"></p>
                 <button class="btn btn-primary" id="btnDBCreate" onclick="createDatabase()">Create Database</button>
                 <button class="btn btn-primary" id="btnDBUpdate" onClick="updateTables()">Upgrade Database</button>
@@ -50,15 +64,17 @@
             <div id="panel-3" class="hidden">
                 <h2>Not yet implemented</h2>
                 <h2>Installation Complete</h2>
-                <ul>
-                    <li>Check if installation was successful</li>
-                    <li>Save Database details to config.php</li>
-                    <li>Delete installer folder? or prompt for user to delete it?</li>
-                </ul>
+                <p>
+                    Anubis app has finished installing, your database connection details have been written to config.inc.php.
+                </p>
+                <p>
+                    Please delete the installer folder from the root folder of your anubisapp.
+                </p>
             </div>
-            
-            <button class="btn btn-primary" id="btnPrev">Previous</button>
-            <button class="btn btn-primary" id="btnNext">Next</button>
+            <div class="navbuttons">
+                <button class="btn btn-primary" id="btnPrev">Previous</button>
+                <button class="btn btn-primary" id="btnNext">Next</button>
+            </div>
             <div id="result"></div>
         </div>
         

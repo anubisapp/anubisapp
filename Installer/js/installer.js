@@ -5,7 +5,7 @@ $(document).ready(function() {
     $("#cp").html($("#panel-"+page).html());
     
     $("#btnNext").click(function() {
-        if(page < 3)
+        if(page < 4)
         {
             page++;
             changePanelContent(page);
