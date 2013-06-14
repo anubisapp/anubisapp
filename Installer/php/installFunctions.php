@@ -3,11 +3,10 @@
 /**
 * TODO: Inputs needs sanitizing.
 *       Optimization like a boss!
-*       Write to config.
 */
 
 try {
-require("DB.php");
+    require("DB.php");
     $method = $_GET["method"];
     $retval = call_user_func($method);
     echo json_encode($retval);
@@ -104,24 +103,48 @@ function writeToConfig($host, $username, $password, $database)
         $file = "..\..\config.inc.php";
         $content = file_get_contents($file);
         
-        $content = preg_replace('/\$dbdatabase = \"(.*?)\"/',
-                                '\$dbdatabase = "'.$database.'"',
-                                $content);      
-        $content = preg_replace('/\$dbusername = \"(.*?)\"/',
-                                '\$dbusername = "'.$username.'"',
-                                $content);    
-        $content = preg_replace('/\$dbpassword = \"(.*?)\"/',
-                                '\$dbpassword = "'.$password.'"',
-                                $content);        
-        $content = preg_replace('/\$dbhost = \"(.*?)\"/',
-                                '\$dbhost = "'.$host.'"',
-                                $content); 
-
-        file_put_contents($file, $content);
+        $content = preg_writeVar("dbdatabase", $content, $database);
+        $content = preg_writeVar("dbusername", $content, $username);
+        $content = preg_writeVar("dbpassword", $content, $password);
+        $content = preg_writeVar("dbhost", $content, $host);
         
+        file_put_contents($file, $content);
+        echo "Database login detials successfully written";
     }
     catch(Exception $e)
     {
         throw new Exception("Failed to write values to config.inc.php");  
     }
 }
+
+function writeAuthDetails()
+{
+    try
+    {
+        $username = $_GET["user"];
+        $password = $_GET["pass"];
+        
+        $file = "..\..\auth.inc.php";
+        $content = file_get_contents($file);
+
+        $content = preg_writeVar("user", $content, $username);
+        $content = preg_writeVar("pass", $content, $password);
+        
+        file_put_contents($file, $content);
+
+        return "Authentication Details successfully written";
+    }
+    catch(Exception $e)
+    {
+        throw new Exception("Failed to write Authentication details to auth.inc.php");
+    }
+}
+
+function preg_writeVar($varname, $content, $value)
+{
+    return preg_replace('/\$'.$varname.'\s*=\s*\"(.*?)\"/',
+                        '\$'.$varname.' = "'.$value.'"',
+                        $content);
+}
+
+?>

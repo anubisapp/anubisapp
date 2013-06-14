@@ -5,9 +5,10 @@ $(document).ready(function() {
     $("#cp").html($("#panel-"+page).html());
     
     $("#btnNext").click(function() {
-        if(page < 4)
+        if(page < 5)
         {
             page++;
+            console.log("panel " + page);
             changePanelContent(page);
         }
     });
@@ -16,13 +17,17 @@ $(document).ready(function() {
         if(page > 1)
         {
             page--;
+            console.log("panel " + page);
             changePanelContent(page);
         }
     });
 });
 
     function changePanelContent(panelNumber) {
-        if(panelNumber === 2) checkForTables();
+        if(panelNumber === 4) {
+            writeAuthDetails();
+            checkForTables();
+        }
         $("#cp").html($("#panel-"+panelNumber).html());
     }
 
@@ -65,7 +70,7 @@ $(document).ready(function() {
             dataType: "json",
             data: { method: "CreateTables", username: user, password: pass, database: db, host: host }
         }).success(function(data) {
-                SuccessMessage(data);
+
         }).error(function(data) {
             console.log(data);
             ErrorMessage(data.responseText);
@@ -83,15 +88,36 @@ $(document).ready(function() {
             url: "php/installFunctions.php",
             type: "GET",
             dataType: "json",
-            data: { method: "updateTables", username: user, password: pass, database: db, host: host }
+            contentType: "application/json",
+            data: { method: "updateTables", username: user, password: pass, database: db, host: host },
+            async: false
         }).success(function(data) {
-            SuccessMessage(data);
+
         }).error(function(data) {
             console.log(data);
             ErrorMessage(data.responseText);
         });
     }
     
+    function writeAuthDetails()
+    {
+        var userLogin = $("#txt_loginname").val();
+        var userPass = $("#txt_loginpassword").val();
+        console.log(userLogin + " " + userPass);
+        $.ajax({
+            url: "php/installFunctions.php",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json",
+            data: { method: "writeAuthDetails", user: userLogin, pass: userPass },
+            async: false
+        }).done(function(rsp) {
+
+        }).error(function(rsp) {
+            ErrorMessage(rsp.responseText);
+        });
+    }
+
     function SuccessMessage(message)
     {
          $("#result").html("<div class='alert alert-success'><strong>"+message+"</strong></div>");

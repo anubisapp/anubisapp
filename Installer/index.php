@@ -36,6 +36,21 @@
             </div>
             
             <div id="panel-2" class="hidden">
+                <h2>User authentication</h2>
+                <p>
+                    please enter a username and password, this will be used to login to anubisapp.
+                </p>
+                <form>
+                    <fieldset>
+                        <label>Username</label>
+                        <input type="text" placeholder="username" id="txt_loginname" />
+                        <label>Password</label>
+                        <input type="password" placeholder="password" id="txt_loginpassword" />
+                    </fieldset>
+                </form>
+            </div>
+            
+            <div id="panel-3" class="hidden">
                 <h2>Database details</h2>
                     <p>Please enter the details so we can connect to your database</p>
                     <p>If you have not changed your database login details then the default values should work.</p>
@@ -55,14 +70,13 @@
                     </div>
             </div>
             
-            <div id="panel-3" class="hidden">    
+            <div id="panel-4" class="hidden">    
                 <p id="installTxt"></p>
                 <button class="btn btn-primary" id="btnDBCreate" onclick="createDatabase()">Create Database</button>
                 <button class="btn btn-primary" id="btnDBUpdate" onClick="updateTables()">Upgrade Database</button>
             </div>
             
-            <div id="panel-3" class="hidden">
-                <h2>Not yet implemented</h2>
+            <div id="panel-5" class="hidden">
                 <h2>Installation Complete</h2>
                 <p>
                     Anubis app has finished installing, your database connection details have been written to config.inc.php.
@@ -71,6 +85,7 @@
                     Please delete the installer folder from the root folder of your anubisapp.
                 </p>
             </div>
+            
             <div class="navbuttons">
                 <button class="btn btn-primary" id="btnPrev">Previous</button>
                 <button class="btn btn-primary" id="btnNext">Next</button>
